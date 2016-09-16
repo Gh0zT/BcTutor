@@ -28,6 +28,7 @@ function NewUser() {
         echo "Er is iets misgegaan tijdens de uitvoering!"
     }
 }
+}
 
 function SignUp() {
     
