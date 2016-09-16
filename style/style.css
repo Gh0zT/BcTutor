@@ -7,6 +7,11 @@
 }
 
 /* defaults */
+p, label {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 10pt;
+    color: #3d464d;
+}
 button {
     background-color: #007ee5;
     color: #ffffff;
@@ -18,25 +23,23 @@ button {
     border-radius: 5px;
     margin-top: 20px;
 }
-input[type=text], textarea {
+input[type=text], input[type=password], textarea{
     -webkit-transition: all 0.30s ease-in-out;
     -moz-transition: all 0.30s ease-in-out;
     -ms-transition: all 0.30s ease-in-out;
     -o-transition: all 0.30s ease-in-out;
     outline: none;
     border: 1px solid #D0D4D9;
+    width: calc(100% - 32px);
+    font-size: 16px;
+    padding: 4px 16px;
+    height: 24pt;
+    border-radius: 8px;
+    margin-bottom: 10px;
 }
 input[type=text]:focus, textarea:focus {
     box-shadow: 0 0 7px rgba(91, 213, 255, 1);
     border: 2px solid rgba(91, 213, 255, 1);
-}
-input[type=password], textarea {
-    -webkit-transition: all 0.30s ease-in-out;
-    -moz-transition: all 0.30s ease-in-out;
-    -ms-transition: all 0.30s ease-in-out;
-    -o-transition: all 0.30s ease-in-out;
-    outline: none;
-    border: 1px solid #D0D4D9;
 }
 input[type=password]:focus, textarea:focus {
     box-shadow: 0 0 7px rgba(91, 213, 255, 1);
@@ -44,6 +47,8 @@ input[type=password]:focus, textarea:focus {
 }
 
 /* element specific */
+
+/* nav-bar */
 ul > li {
     border: 2px solid transparent;
     height: 30pt;
@@ -104,7 +109,8 @@ input[type=password]:focus, textarea:focus {
     width: 100%;
     margin-top: 10px;
 }
-.divider span {
+.divider:before {
+    content: 'of';
     position: relative;
     top: 10px;
     width: 100%;
