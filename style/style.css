@@ -5,6 +5,12 @@
 .left {
     float: left;
 }
+.show {
+    visibility: visible;
+}
+.hide {
+    visibility: hidden;
+}
 .full-width {
     width: 100%;
 }
