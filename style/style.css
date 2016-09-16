@@ -5,13 +5,64 @@
 .left {
     float: left;
 }
+.wrapper {
+    width: 80%;
+    margin: 0 10% 0 10%;
+}
 
-/* defaults */
+/* -------------- */
+/*    defaults    */
+/* -------------- */
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #007ee5;
+}
+
+/* nav-bar */
+nav {
+    z-index: 999;
+    background-color: #ffffff;
+    width: 100%;
+    height: 50pt;
+    position: fixed;
+    top: 0;
+    overflow: hidden;
+    border-bottom: 1px solid #D0D4D9;
+}
+nav > ul {
+    margin: 0;
+    display: inline-block;
+    float: right;
+}
+nav > ul > li {
+    border: 2px solid transparent;
+    height: 30pt;
+    width: 100pt;
+    margin: 9pt 0 9pt 0;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+nav > ul > li > p{
+    color: #007ee5;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+}
+nav > ul li:hover {
+    border: 2px solid #2895F1;
+    border-radius: 8px;
+}
+
+/* text elements */
 p, label {
     font-family: 'Open Sans', sans-serif;
     font-size: 10pt;
     color: #3d464d;
 }
+
+/* forms and buttons */
 button {
     background-color: #007ee5;
     color: #ffffff;
@@ -46,22 +97,21 @@ input[type=password]:focus, textarea:focus {
     border: 2px solid rgba(91, 213, 255, 1);
 }
 
+/* ---------------- */
 /* element specific */
+/* ---------------- */
 
-/* nav-bar */
-ul > li {
-    border: 2px solid transparent;
-    height: 30pt;
-    width: 100pt;
-    margin: 9pt 0 9pt 0;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
+/* navbar */
+#logo {
+    margin: 0;
+    line-height: 50pt;
+    color: 0096db;
+    float: left;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 24pt;
 }
-ul li:hover {
-    border: 2px solid #2895F1;
-    border-radius: 8px;
-}
+
+/* content */
 #content:before {
     content: "";
     position: absolute;

@@ -7,9 +7,9 @@
                 <meta charset="UTF-8">
         </head>
 
-        <body style="margin: 0; padding: 0; background-color: #007ee5;">
+        <body>
 
-                <?php include /includes/navbar.php ?>
+                <?php include 'includes/navbar.php'; ?>
 
                 <div id="content">
 
@@ -23,7 +23,7 @@
 
                                         <input autofocus="autofocus" name="leerlingnummer" type="text" placeholder="Leerlingnummer">
 
-                                        <input type="password" placeholder="Wachtwoord">
+                                        <input type="password" placeholder="wachtwoord">
 
 
 
