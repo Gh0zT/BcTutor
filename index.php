@@ -9,7 +9,7 @@
 
         <body style="margin: 0; padding: 0; background-color: #007ee5;">
 
-                <?php include /includes/navbar.php ?>
+                <?php include 'includes/navbar.php'; ?>
 
                 <div id="content">
 
