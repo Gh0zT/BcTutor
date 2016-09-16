@@ -6,13 +6,15 @@
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
         <meta charset="UTF-8">
     </head>
-
+    
     <body>
         <?php include 'includes/navbar.php'; ?>
 
         <div id="content">
             <div id="login-box">
                 <h2 class="login-caption">Login</h2>
+
+                <?php include 'includes/navbar.php'; ?>
 
                 <form action="login-magister.php" class="login-form">
                     <p>Log in met je magister leerlingnummer</p>
