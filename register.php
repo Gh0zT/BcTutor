@@ -1,7 +1,7 @@
 <?php
 
-Include('../../dbconfig.php')
-Include('dbconnect.php')
+Include '../../dbconfig.php';
+Include 'dbconnect.php';
 
 function NewUser() {
     
