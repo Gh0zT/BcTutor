@@ -1,6 +1,6 @@
 <?php
 
-include '../../dbconfig.php';
+include __dir__ . '/../../dbconfig.php';
 include 'dbconnect.php';
 
 function NewUser() {
@@ -22,10 +22,10 @@ function NewUser() {
         $sql = mysql_query ($query) or die (mysql_error());
     
     if($sql) {
-        echo "U heeft zich succelvol geregistreerd!"
+        echo "U heeft zich succelvol geregistreerd!";
     }
     else {
-        echo "Er is iets misgegaan tijdens de uitvoering!"
+        echo "Er is iets misgegaan tijdens de uitvoering!";
     }
 }
 }
