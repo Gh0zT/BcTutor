@@ -53,16 +53,14 @@
                     
                     $("#change-logintype").click(function(){
                         if ($a == 1) {
-                            $("#magister-login").fadeOut(500);
-                            setTimeout(function() {
+                            $("#magister-login").fadeOut(500, function() {
                                 $("#normal-login").fadeIn(500);
-                            }, 500);
+                            });
                             $a = 2;
                         } else {
-                            setTimeout(function() {
+                            $("#normal-login").fadeOut(500, function() {
                                 $("#magister-login").fadeIn(500);
-                            }, 500);
-                            $("#normal-login").fadeOut(500);
+                            });
                             $a = 1;
                         }
                     });
