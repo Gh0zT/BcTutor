@@ -1,5 +1,7 @@
 <?php
-include __dir__ . '../..dbconfig.php';
+
+$file = "/var/www/dbconfig.php";
+include($file);
 
 try {
 	$conn = new PDO("mysql: host=$host; dbname=$dbname", $username, $password);
@@ -7,4 +9,5 @@ try {
 } catch (PDOException $pe) {
 	die("Could not connect to the database $dbname :" . $pe->getMessage());
 }
+
 ?>
