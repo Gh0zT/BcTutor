@@ -5,6 +5,12 @@
 .left {
     float: left;
 }
+.text-right {
+    text-align: right;
+}
+.text-left {
+    text-align: left;
+}
 .show {
     visibility: visible;
 }
@@ -25,11 +31,14 @@
 /* -------------- */
 /*    defaults    */
 /* -------------- */
-
+html {
+    height: 100%;
+}
 body {
     margin: 0;
     padding: 0;
     background-color: #007ee5;
+    height: 100%;
 }
 
 /* nav-bar */
@@ -72,8 +81,21 @@ p, label {
     font-family: 'Open Sans', sans-serif;
     font-size: 10pt;
     color: #3d464d;
+    margin: 0;
+}
+a {
+    color: #007ee5;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 10pt;
+    text-decoration: none;
 }
 h2 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 200;
+    font-size: 26pt;
+    color: #ffffff
+}
+h3 {
     font-family: 'Open Sans', sans-serif;
     font-weight: 200;
     font-size: 15pt;
@@ -105,8 +127,8 @@ input[type=text], input[type=password], textarea{
     -ms-transition: all 0.30s ease-in-out;
     -o-transition: all 0.30s ease-in-out;
     outline: none;
-    border: 1px solid #D0D4D9;
-    width: calc(100% - 32px);
+    border: 2px solid #D0D4D9;
+    width: calc(100% - 36px);
     font-size: 16px;
     padding: 4px 16px;
     height: 24pt;
@@ -132,7 +154,7 @@ input[type=checkbox] {
     border-bottom: 1px solid #808080;
     height: 20px;
     width: 100%;
-    margin-top: 10px;
+    margin-top: 6px;
 }
 .divider:before {
     content: 'of';
@@ -164,32 +186,45 @@ input[type=checkbox] {
     position: absolute;
     -webkit-filter: grayscale(60%);
     filter: grayscale(60%);
-    height: 700pt;
     width: 100%;
+    height: 100%;
+    min-height: 50pt;
     background-size: cover;
     background-image: url('https://static.pexels.com/photos/232/apple-iphone-books-desk.jpg');
 }
 #content {
-    top: 50pt;
     position: relative;
-    height: 500pt;
+    margin: 50pt 0 0 0;
+    height: 80%;
+    min-height: 50pt;
+    width: 100%;
+}
+#caption {
+    margin: 0;
+    padding: 50px 0 50px 10%;
+    z-index: 2;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: block;
+    background-color: rgba(0, 0, 0, 0.6);
     width: 100%;
 }
 #login-box {
+    z-index: 3;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     padding: 30px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
     border-radius: 8px;
-    position: relative;
     float: right;
     display: block;
     background-color: #f6f9fc;
-    height: 70%;
-    width: 30%;
     right: 10%;
-    top: 15%;
-    bottom: 15%;
+    width: 25%;
     min-width: 300px;
-    max-width: 340px;
+    max-width: 380px;
 }
 .login-caption {
     position: absolute;
@@ -210,4 +245,11 @@ input[type=checkbox] {
 }
 .login-form > p{
     margin-bottom: 7px;
+}
+.login-form table {
+    width: 100%;
+    margin-top: 16px;
+}
+.login-form table td {
+    margin: 0;
 }

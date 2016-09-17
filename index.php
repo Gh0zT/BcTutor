@@ -13,8 +13,10 @@
         <?php include 'includes/navbar.php'; ?>
 
         <div id="content">
+            <h2 id="caption">Hier komt een fancy slogan die je onder andere<br> aanmoedigd om je aan te melden voor de site!</h2>
+            
             <div id="login-box">
-                <h2 class="login-caption">Login</h2>
+                <h3 class="login-caption">Login</h3>
 
                 <form id="magister-login" action="login-magister.php" class="login-form">
                     <p>Log in met je magister leerlingnummer</p>
@@ -26,6 +28,15 @@
                     <label for="remember">Mijn gegevens onthouden</label>
 
                     <button class="margin-reset right" type="submit">Inloggen</button>
+                    
+                    <table>
+                        <tr>
+                            <td class="text-right"><p>Wachtwoord vergeten?</p></td>
+                        </tr>
+                        <tr>
+                            <td><a target="_blank" href="https://baudartius.magister.net/#/wachtwoord-vergeten" class="right">Wachtwoordherstel</a></td>
+                        </tr>
+                    </table>
                 </form>
                 
                 <form id="normal-login" action="login.php" class="login-form">
@@ -37,7 +48,18 @@
                     <input checked="checked" type="checkbox" id="rememberme" name="remember_me">
                     <label for="remember">Mijn gegevens onthouden</label>
 
-                    <button class="margin-reset right" type="submit">Inloggen</button>
+                    <button class="margin-reset right" type="submit">Inloggen</button><br>
+                    
+                    <table>
+                        <tr>
+                            <td><p>Nog geen BcTutor account?</p></td>
+                            <td class="text-right"><p>Wachtwoord vergeten?</p></td>
+                        </tr>
+                        <tr>
+                            <td><a href="register.html" class="left">Account aanmaken</a></td>
+                            <td><a href="forgot-pass.php" class="right">Wachtwoordherstel</a></td>
+                        </tr>
+                    </table>
                 </form>
 
                 <div class="divider"></div>
