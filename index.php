@@ -71,19 +71,27 @@
                         $("#normal-login").hide();
                     });
                     
-                    $a = 1
+                    $loginType = 1;
+                    $busy = 0;
                     
                     $("#change-logintype").click(function(){
-                        if ($a == 1) {
-                            $("#magister-login").fadeOut(500, function() {
-                                $("#normal-login").fadeIn(500);
-                            });
-                            $a = 2;
-                        } else {
-                            $("#normal-login").fadeOut(500, function() {
-                                $("#magister-login").fadeIn(500);
-                            });
-                            $a = 1;
+                        if ($busy == 0) {
+                            $busy = 1;
+                            if ($loginType == 1) {
+                                $("#magister-login").fadeOut(500, function() {
+                                    $("#normal-login").fadeIn(500, function() {
+                                        $busy = 0;
+                                    });
+                                });
+                                $loginType = 2;
+                            } else {
+                                $("#normal-login").fadeOut(500, function() {
+                                    $("#magister-login").fadeIn(500, function() {
+                                        $busy = 0;
+                                    });
+                                });
+                                $loginType = 1;
+                            }
                         }
                     });
                 </script>
