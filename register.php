@@ -5,7 +5,7 @@ include($file);
 
 include 'dbconnect.php';
 
-function NewUser() {
+function UserValues() {
 
     $Voornaam = $_POST['Voornaam'];
     $Tussenvoegsel = $_POST['Tussenvoegsel'];
@@ -15,12 +15,15 @@ function NewUser() {
     $Wachtwoord = $_POST['Wachtwoord'];
     $Email = $_POST['Email'];
 
+}
+function NewUser() {
+
     if($_POST['Voornaam']=='' || $_POST['Achternaam']=='' || $_POST['Leeftijd']=='' || $_POST['Gebruikersnaam']==''|| $_POST['Wachtwoord']==''|| $_POST['Email']=='') {
         echo "Vul alstublieft de verplichte velden in!";
     }
     else {
     
-        $query = "INSERT INTO `Register` (Voornaam,Tussenvoegsel,Achternaam,Leeftijd,Gebruikersnaam,Wachtwoord,Email) VALUES ('Voornaam', 'Tussenvoegsel', 'Achternaam', 'Leeftijd', 'Gebruikersnaam', 'Wachtwoord', 'Email')";
+        $query = "INSERT INTO `Register` (Voornaam,Tussenvoegsel,Achternaam,Leeftijd,Gebruikersnaam,Wachtwoord,Email) VALUES ('$Voornaam', '$Tussenvoegsel', '$Achternaam', '$Leeftijd', '$Gebruikersnaam', '$Wachtwoord', '$Email')";
         $sql = mysql_query ($query) or die (mysql_error());
     
     if($sql) {
@@ -46,11 +49,15 @@ if(!empty($_POST['Gebruikersnaam'])) {
     else { 
         echo "Sorry, U bent al geregistreed!"; 
     } 
-} 
+}
+else {
+	echo "Vul alstublieft de verplichte velden in!"; 
+}      
 }
        
 if(isset($_POST['submit-registration'])) {
-    
+ 
+    UserValues();
     SignUp();
 }
 ?>
