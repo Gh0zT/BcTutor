@@ -3,10 +3,9 @@
 $file = "/var/www/dbconfig.php";
 require($file);
 
-try {
-	$conn = new PDO("mysql: host=$host; dbname=$dbname", $username, $password);
-	echo "Connected to $dbname at $host succesfully.";
-} catch (PDOException $pe) {
-	die("Could not connect to the database $dbname :" . $pe->getMessage());
-}
+$conn = mysql_connect($host, $username, $password) or die("Unable to connect: " . mysql_error());
+echo "Succesfully connected to $dbname at $host";
+
+$database = mysql_select_db("BcTutorDB", $conn) or die(mysql_error());
+
 ?>
