@@ -37,7 +37,8 @@ html {
 body {
     margin: 0;
     padding: 0;
-    background-color: #007ee5;
+    background-color: #ffffff;
+    background-image: url(../source/images/cubes.png);
     height: 100%;
 }
 
@@ -92,7 +93,7 @@ a {
 h2 {
     font-family: 'Open Sans', sans-serif;
     font-weight: 200;
-    font-size: 26pt;
+    font-size: 22pt;
     color: #ffffff
 }
 h3 {
@@ -209,6 +210,9 @@ input[type=checkbox] {
     display: block;
     background-color: rgba(0, 0, 0, 0.6);
     width: 100%;
+    -moz-box-sizing: border-box; 
+    -webkit-box-sizing: border-box; 
+    box-sizing: border-box;
 }
 #login-box {
     z-index: 3;
