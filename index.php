@@ -19,10 +19,10 @@
                 <h3 class="login-caption">Login</h3>
 
                 <form id="magister-login" action="login-magister.php" class="login-form">
-                    <p>Log in met je magister leerlingnummer</p>
+                    <p>Log in met je Magister account</p>
 
-                    <input autofocus="autofocus" name="magisteruser" type="text" placeholder="leerlingnummer">
-                    <input name="magisterpassword" type="password" placeholder="wachtwoord">
+                    <input autofocus="autofocus" name="magisteruser" type="text" placeholder="Leerlingnummer">
+                    <input name="magisterpassword" type="password" placeholder="Wachtwoord">
 
                     <input checked="checked" type="checkbox" id="rememberme" name="remember_me">
                     <label for="remember">Mijn gegevens onthouden</label>
@@ -42,8 +42,8 @@
                 <form id="normal-login" action="login.php" class="login-form">
                     <p>Log in met je BcTutor account</p>
 
-                    <input autofocus="autofocus" name="username" type="text" placeholder="gebruikersnaam / e-mailadres">
-                    <input name="password" type="password" placeholder="wachtwoord">
+                    <input autofocus="autofocus" name="username" type="text" placeholder="Gebruikersnaam / E-mailadres">
+                    <input name="password" type="password" placeholder="Wachtwoord">
 
                     <input checked="checked" type="checkbox" id="rememberme" name="remember_me">
                     <label for="remember">Mijn gegevens onthouden</label>
@@ -64,8 +64,16 @@
 
                 <div class="divider"></div>
                 
-                <button type="submit" id="change-logintype">Log in met je BcTutor account</button>
-                
+		<input onclick="change()" type="button" value="Log in met je BcTutor account" id="change-logintype"></input>
+
+		<script>
+			function change() {
+    				var elem = document.getElementById("change-logintype");
+    				if (elem.value=="Log in met je BcTutor account") elem.value = "Log in met je Magister account";
+    				else elem.value = "Log in met je BcTutor account";
+			}		
+ 		</script>
+
                 <script>
                     $(document).ready(function(){
                         $("#normal-login").hide();
