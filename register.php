@@ -1,9 +1,12 @@
 <?php
 
-$file = "/var/www/dbconfig.php";
-include($file);
+ini_set('error_reporting', E_ALL);
+ini_set('display_errors', 1);
 
-include 'dbconnect.php';
+$file = "/var/www/dbconfig.php";
+require($file);
+
+require 'dbconnect.php';
 
 function UserValues() {
 

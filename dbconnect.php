@@ -1,7 +1,7 @@
 <?php
 
 $file = "/var/www/dbconfig.php";
-include($file);
+require($file);
 
 try {
 	$conn = new PDO("mysql: host=$host; dbname=$dbname", $username, $password);
