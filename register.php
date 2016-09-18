@@ -23,7 +23,7 @@ function NewUser() {
     }
     else {
     
-        $query = "INSERT INTO `Register` (Voornaam,Tussenvoegsel,Achternaam,Leeftijd,Gebruikersnaam,Wachtwoord,Email) VALUES ('$Voornaam', '$Tussenvoegsel', '$Achternaam', '$Leeftijd', '$Gebruikersnaam', '$Wachtwoord', '$Email')";
+        $query = "INSERT INTO `Register` (Voornaam,Tussenvoegsel,Achternaam,Leeftijd,Gebruikersnaam,Wachtwoord,Email) VALUES ('$_POST[Voornaam]', '$_POST[Tussenvoegsel]', '$_POST[Achternaam]', '$_POST[Leeftijd]', '$_POST[Gebruikersnaam]', '$_POST[Wachtwoord]', '$_POST[Email]')";
         $sql = mysql_query ($query) or die (mysql_error());
     
     if($sql) {
@@ -39,15 +39,15 @@ function SignUp() {
     
 if(!empty($_POST['Gebruikersnaam'])) { 
    
-    $query = mysql_query("SELECT * FROM `Register` WHERE Gebruikersnaam = '$_POST[Gebruikersnaam]' AND Wachtwoord = '$_POST[Wachtwoord]'") or die(mysql_error());
+    $query = mysql_query("SELECT * FROM `Register` WHERE Gebruikersnaam = '$_POST[Gebruikersnaam]'") or die(mysql_error());
     
-    if(!$row = mysql_fetch_array($query) or die(mysql_error())) {
+    if(!$row = mysql_fetch_array($query)) {
         
         NewUser(); 
     } 
     
     else { 
-        echo "Sorry, U bent al geregistreed!"; 
+        echo "Sorry, deze gebruikersnaam is al in gebruik!"; 
     } 
 }
 else {
