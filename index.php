@@ -11,12 +11,20 @@
     
     <body>
         <?php include 'includes/navbar.php'; ?>
+        
+        <div class="entry register">
+            <h3 class="entry-caption">Registreer</h3>
+            
+            <form action="register.php">
+            
+            </form>
+        </div>
 
         <div id="content">
             <h2 id="caption">Hier komt een fancy slogan die je onder andere<br> aanmoedigd om je aan te melden voor de site!</h2>
             
-            <div id="login-box">
-                <h3 class="login-caption">Login</h3>
+            <div class="entry login">
+                <h3 class="entry-caption">Login</h3>
 
                 <form id="magister-login" action="login-magister.php" class="login-form">
                     <p>Log in met je Magister account</p>
@@ -64,15 +72,7 @@
 
                 <div class="divider"></div>
                 
-		<input onclick="change()" type="button" value="Log in met je BcTutor account" id="change-logintype"></input>
-
-		<script>
-			function change() {
-    				var elem = document.getElementById("change-logintype");
-    				if (elem.value=="Log in met je BcTutor account") elem.value = "Log in met je Magister account";
-    				else elem.value = "Log in met je BcTutor account";
-			}		
- 		</script>
+                <button id="change-logintype">Log in met je BcTutor account</button>
 
                 <script>
                     $(document).ready(function(){
@@ -85,7 +85,9 @@
                     $("#change-logintype").click(function(){
                         if ($busy == 0) {
                             $busy = 1;
+                            
                             if ($loginType == 1) {
+                                $("#change-logintype").html('Log in met je Magister account');
                                 $("#magister-login").fadeOut(500, function() {
                                     $("#normal-login").fadeIn(500, function() {
                                         $busy = 0;
@@ -93,6 +95,7 @@
                                 });
                                 $loginType = 2;
                             } else {
+                                $("#change-logintype").html('Log in met je BcTutor account');
                                 $("#normal-login").fadeOut(500, function() {
                                     $("#magister-login").fadeIn(500, function() {
                                         $busy = 0;
