@@ -15,12 +15,24 @@
     <body>
         <?php include 'includes/navbar.php'; ?>
         
-        <div class="entry register">
-            <h3 class="entry-caption">Registreer</h3>
+        <div id="register-container">
+            <div class="entry register">
+                <h3 class="entry-caption">Registreer</h3>
+
+                <form action="register.php">
+
+                </form>
+            </div>
             
-            <form action="register.php">
+            <script>
+                $(document).ready(function(){
+                    $("#register-container").hide();
+                });
             
-            </form>
+                function registerBoxAppear() {
+                    $("#register-container").fadeIn(500);
+                };
+            </script>
         </div>
 
         <div id="content">
@@ -67,7 +79,7 @@
                             <td class="text-right"><p>Wachtwoord vergeten?</p></td>
                         </tr>
                         <tr>
-                            <td><a href="register.html" class="left">Account aanmaken</a></td>
+                            <td><a onclick="registerBoxAppear()" href="#" class="left">Account aanmaken</a></td>
                             <td><a href="forgot-pass.php" class="right">Wachtwoordherstel</a></td>
                         </tr>
                     </table>
