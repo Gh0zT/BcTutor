@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+
+<?php session_start(); ?>
+
 <html>
     <head>
         <title>BcTutor</title>
@@ -47,16 +50,16 @@
                     </table>
                 </form>
                 
-                <form id="normal-login" action="login.php" class="login-form">
+                <form id="normal-login" action="login.php" class="login-form" method="POST">
                     <p>Log in met je BcTutor account</p>
 
-                    <input autofocus="autofocus" name="username" type="text" placeholder="Gebruikersnaam / E-mailadres">
-                    <input name="password" type="password" placeholder="Wachtwoord">
+                    <input autofocus="autofocus" name="myusername" type="text" placeholder="Gebruikersnaam / E-mailadres">
+                    <input name="mypassword" type="password" placeholder="Wachtwoord">
 
                     <input checked="checked" type="checkbox" id="rememberme" name="remember_me">
                     <label for="remember">Mijn gegevens onthouden</label>
 
-                    <button class="margin-reset right" type="submit">Inloggen</button><br>
+                    <button class="margin-reset right" type="submit" name="submit-login">Inloggen</button><br>
                     
                     <table>
                         <tr>
