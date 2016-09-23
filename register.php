@@ -1,45 +1,3 @@
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <title>Registreer!</title>
-    </head>
-
-    <body>
-        <div>
-            <fieldset><legend>Registratie</legend>
-                <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                    <table border="0">
-                        <tr>
-                        <td>Voornaam</td><td> <input type="text" name="Voornaam"></td>
-                        </tr>
-                        <tr>
-                        <td>Tussenvoegsel</td><td> <input type="text" name="Tussenvoegsel"></td>
-                        </tr>
-                        <tr>
-                        <td>Achternaam</td><td> <input type="text" name="Achternaam"></td>
-                        </tr>
-                        <tr>
-                        <td>Leeftijd</td><td> <input type="text" name="Leeftijd"></td>
-                        </tr>
-                        <tr>
-                        <td>Gebruikersnaam</td><td><input type="text" name="Gebruikersnaam"></td>
-                        </tr>
-                        <tr>
-                        <td>Wachtwoord</td><td><input type="password" name="Wachtwoord"></td>
-                        </tr>
-                        <tr>
-                        <td>Email</td><td><input type="text" name="Email"></td>
-                        </tr>
-                        <tr>
-                        <td><input id="button" type="submit" name="submit-registration" value="Registreer!"></td>
-                        </tr>
-                    </table>
-                </form>
-            </fieldset>
-        </div>
-    </body>
-</html>
-
 <?php
 
 $file = "/var/www/dbconfig.php";
@@ -69,7 +27,7 @@ function NewUser() {
         $sql = mysql_query ($query) or die (mysql_error());
     
     if($sql) {
-        echo "U heeft zich succelvol geregistreerd!";
+        echo "U heeft zich succesvol geregistreerd!";
     }
     else {
         echo "Er is iets misgegaan tijdens de uitvoering!";

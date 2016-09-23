@@ -116,7 +116,7 @@ h3 {
 }
 
 /* forms and buttons */
-input[type="button" i] {
+input[type="button"] {
     background-color: #007ee5;
     color: #ffffff;
     font-size: 14px;
@@ -145,7 +145,7 @@ button:hover {
 form button {
     width: 100px;
 }
-input[type=text], input[type=password], textarea{
+input[type=text], input[type=password], input[type=email], textarea{
     -webkit-transition: all 0.30s ease-in-out;
     -moz-transition: all 0.30s ease-in-out;
     -ms-transition: all 0.30s ease-in-out;
@@ -164,6 +164,10 @@ input[type=text]:focus, textarea:focus {
     border: 2px solid rgba(91, 213, 255, 1);
 }
 input[type=password]:focus, textarea:focus {
+    box-shadow: 0 0 7px rgba(91, 213, 255, 1);
+    border: 2px solid rgba(91, 213, 255, 1);
+}
+input[type=email]:focus, textarea:focus {
     box-shadow: 0 0 7px rgba(91, 213, 255, 1);
     border: 2px solid rgba(91, 213, 255, 1);
 }
@@ -188,6 +192,32 @@ input[type=checkbox] {
     color: #595959;
     background-color: #f6f9fc;
     padding: 0 6px;
+}
+.close-popup {
+    position: absolute;
+    top: calc(25pt - 12px);
+    right: calc(25pt - 12px);
+    height: 24px;
+    width: 24px;
+    opacity: 0.3;
+    cursor: pointer;
+}
+.close-popup:hover {
+    opacity: 1;
+}
+.close-popup:before, .close-popup:after {
+    position: absolute;
+    left: 12px;
+    content: ' ';
+    height: 24px;
+    width: 2px;
+    background-color: #333;
+}
+.close-popup:before {
+    transform: rotate(-45deg);
+}
+.close-popup:after {
+    transform: rotate(45deg);
 }
 
 /* ---------------- */
@@ -250,9 +280,10 @@ input[type=checkbox] {
     max-width: 380px;
 }
 .register {
+    display: block;
     z-index: 300;
-    position: fixed;
-    width: 500px;
+    position: relative;
+    width: 360px;
     height: 500px;
 }
 .entry {

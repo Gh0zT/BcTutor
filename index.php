@@ -18,9 +18,17 @@
         <div id="register-container">
             <div class="entry register">
                 <h3 class="entry-caption">Registreer</h3>
+		<div id="close-register" class="close-popup"></div>
 
-                <form action="register.php">
-
+               	<form class="login-form" method="POST" action="register.php">
+                    <input type="text" name="Voornaam" placeholder="Voornaam">
+                    <input type="text" name="Tussenvoegsel" placeholder="Tussenvoegsel">
+                    <input type="text" name="Achternaam" placeholder="Achternaam">
+                    <input type="text" name="Leeftijd" placeholder="Leeftijd">
+                    <input type="text" name="Gebruikersnaam" placeholder="Gebruikersnaam">
+                    <input type="password" name="Wachtwoord" placeholder="Wachtwoord">
+                    <input type="email" name="Email" placeholder="E-mail">
+		    <button type="sumbit" name="submit-registration">Registreer</button>
                 </form>
             </div>
             
@@ -32,6 +40,16 @@
                 function registerBoxAppear() {
                     $("#register-container").fadeIn(500);
                 };
+
+		$('html').click(function (e) {
+   		    if (e.target.id == 'register-container') {
+      			$("#register-container").fadeOut(500);
+    		    }
+		});
+		
+		$('#close-register').click(function() {
+		    $("#register-container").fadeOut(500);	
+		}); 
             </script>
         </div>
 
