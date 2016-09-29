@@ -10,7 +10,7 @@ function UserValues() {
     $Voornaam = $_POST['Voornaam'];
     $Tussenvoegsel = $_POST['Tussenvoegsel'];
     $Achternaam = $_POST['Achternaam'];
-    $Leeftijd = $_POST['Leeftijd'];
+    $Geboortedatum = $_POST['Geboortedatum'];
     $Gebruikersnaam = $_POST['Gebruikersnaam'];
     $Wachtwoord = $_POST['Wachtwoord'];
     $Email = $_POST['Email'];
@@ -18,12 +18,12 @@ function UserValues() {
 }
 function NewUser() {
 
-    if($_POST['Voornaam']=='' || $_POST['Achternaam']=='' || $_POST['Leeftijd']=='' || $_POST['Gebruikersnaam']==''|| $_POST['Wachtwoord']==''|| $_POST['Email']=='') {
+    if($_POST['Voornaam']=='' || $_POST['Achternaam']=='' || $_POST['Geboortedatum']=='' || $_POST['Gebruikersnaam']==''|| $_POST['Wachtwoord']==''|| $_POST['Email']=='') {
         echo "Vul alstublieft de verplichte velden in!";
     }
     else {
     
-        $query = "INSERT INTO `Register` (Voornaam,Tussenvoegsel,Achternaam,Leeftijd,Gebruikersnaam,Wachtwoord,Email) VALUES ('$_POST[Voornaam]', '$_POST[Tussenvoegsel]', '$_POST[Achternaam]', '$_POST[Leeftijd]', '$_POST[Gebruikersnaam]', '$_POST[Wachtwoord]', '$_POST[Email]')";
+        $query = "INSERT INTO `Register` (Voornaam,Tussenvoegsel,Achternaam,Geboortedatum,Gebruikersnaam,Wachtwoord,Email) VALUES ('$_POST[Voornaam]', '$_POST[Tussenvoegsel]', '$_POST[Achternaam]', '$_POST[Geboortedatum]', '$_POST[Gebruikersnaam]', '$_POST[Wachtwoord]', '$_POST[Email]')";
         $sql = mysql_query ($query) or die (mysql_error());
     
     if($sql) {

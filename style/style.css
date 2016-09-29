@@ -47,7 +47,7 @@ html {
     height: 100%;
 }
 body {
-    margin: 0;
+    margin: 50pt 0 0 0;
     padding: 0;
     background-color: #ffffff;
     background-image: url(../source/images/cubes.png);
@@ -145,7 +145,7 @@ button:hover {
 form button {
     width: 100px;
 }
-input[type=text], input[type=password], input[type=email], textarea{
+input[type=text], input[type=password], input[type=email], input[type=date], textarea{
     -webkit-transition: all 0.30s ease-in-out;
     -moz-transition: all 0.30s ease-in-out;
     -ms-transition: all 0.30s ease-in-out;
@@ -154,10 +154,14 @@ input[type=text], input[type=password], input[type=email], textarea{
     border: 2px solid #D0D4D9;
     width: calc(100% - 36px);
     font-size: 16px;
+    font-family: "Open Sans", sans-serif;
     padding: 4px 16px;
     height: 24pt;
     border-radius: 8px;
     margin-bottom: 10px;
+}
+input[type=text]:invalid //, input[type=password], input[type=email], input[type=date], textarea{
+    border: 2px solid red;
 }
 input[type=text]:focus, textarea:focus {
     box-shadow: 0 0 7px rgba(91, 213, 255, 1);
@@ -168,6 +172,10 @@ input[type=password]:focus, textarea:focus {
     border: 2px solid rgba(91, 213, 255, 1);
 }
 input[type=email]:focus, textarea:focus {
+    box-shadow: 0 0 7px rgba(91, 213, 255, 1);
+    border: 2px solid rgba(91, 213, 255, 1);
+}
+input[type=date]:focus, textarea:focus {
     box-shadow: 0 0 7px rgba(91, 213, 255, 1);
     border: 2px solid rgba(91, 213, 255, 1);
 }

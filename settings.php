@@ -1,3 +1,9 @@
+<?php session_start();
+
+include 'includes/navbar.php';
+
+?>
+
 <html>
 	<head>
         <title>BcTutor</title>

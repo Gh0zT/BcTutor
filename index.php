@@ -21,13 +21,13 @@
 		<div id="close-register" class="close-popup"></div>
 
                	<form class="login-form" method="POST" action="register.php">
-                    <input type="text" name="Voornaam" placeholder="Voornaam">
+                    <input type="text" name="Voornaam" placeholder="Voornaam" required>
                     <input type="text" name="Tussenvoegsel" placeholder="Tussenvoegsel">
-                    <input type="text" name="Achternaam" placeholder="Achternaam">
-                    <input type="text" name="Leeftijd" placeholder="Leeftijd">
-                    <input type="text" name="Gebruikersnaam" placeholder="Gebruikersnaam">
-                    <input type="password" name="Wachtwoord" placeholder="Wachtwoord">
-                    <input type="email" name="Email" placeholder="E-mail">
+                    <input type="text" name="Achternaam" placeholder="Achternaam" required>
+                    <input type="text" name="Geboortedatum" placeholder="Geboortedatum yyyy-mm-dd" onfocus="(this.type='date')" required>
+                    <input type="text" name="Gebruikersnaam" placeholder="Gebruikersnaam" required>
+                    <input type="password" name="Wachtwoord" placeholder="Wachtwoord" required>
+                    <input type="email" name="Email" placeholder="E-mail" required>
 		    <button type="sumbit" name="submit-registration">Registreer</button>
                 </form>
             </div>

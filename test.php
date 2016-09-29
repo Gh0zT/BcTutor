@@ -8,7 +8,7 @@
         	<meta charset="UTF-8">
 	</head>
 
-	<body style="padding-top: 55pt;">
+	<body>
 
         <?php include 'includes/navbar.php'; ?>
 
