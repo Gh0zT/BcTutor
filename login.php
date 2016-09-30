@@ -1,9 +1,5 @@
 <?php
 
-
-//////// WALHALLALALKJLSKDJ SELECT `ID` FROM `Register` WHERE Gebruikersnaam='Mikeyy';
-
-
 session_start();
 
 $file = "/var/www/dbconfig.php";
@@ -26,12 +22,14 @@ if(isset($_POST['submit-login'])) {
 		$_SESSION['user'] = $myusername;
 		$_SESSION['logged_in'] = true;
 
-		$sql2 = "`ID` SELECT FROM `Register` WHERE Gebruikersnaam='$myusername' OR Email='$myusername'";
+		$sql2 = "SELECT `ID` FROM `Register` WHERE Gebruikersnaam='$myusername' OR Email='$myusername'";
                 $result2 = mysql_query($sql2);
+		$values = mysql_fetch_array($result2);
 
-		echo $result2;
 
-		//header("Location: test.php");
+		$_SESSION['ID'] = $values['ID'];
+
+		header("Location: test.php");
 	}
 	else {
 		echo "Verkeerde gebruikersnaam en/of wachtwoord!";

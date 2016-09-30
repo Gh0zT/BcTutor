@@ -1,7 +1,7 @@
 <?php
 
 $file = "/var/www/dbconfig.php";
-require($file);
+require('/var/www/dbconfig.php');
 
 require 'dbconnect.php';
 

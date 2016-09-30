@@ -39,7 +39,8 @@ require 'dbconnect.php';
 if(isset($_POST['submit-settings'])) {
 
 	if($_SESSION['user'] == true) {
-		echo"Aanpassingen gemaakt!";
+		echo"Aanpassingen gemaakt";
+		//$result = mysql_query("UPDATE `Register` SET 
 	}	
 	else {
 		echo"U moet ingelogd zijn om aanpassingen te maken!";
