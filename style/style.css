@@ -227,6 +227,9 @@ input[type=checkbox] {
 .close-popup:after {
     transform: rotate(45deg);
 }
+.header {
+    background-image: url();
+}
 
 /* ---------------- */
 /* element specific */

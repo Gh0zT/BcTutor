@@ -29,7 +29,7 @@ if(isset($_POST['submit-login'])) {
 
 		$_SESSION['ID'] = $values['ID'];
 
-		header("Location: test.php");
+		header("Location: index.php");
 	}
 	else {
 		echo "Verkeerde gebruikersnaam en/of wachtwoord!";

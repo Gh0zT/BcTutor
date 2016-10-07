@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 
-<?php session_start(); ?>
+<?php session_start();
 
+if(!(isset($_SESSION['user'])) && !($_SESSION['logged_in'] == true)) { ?>
 <html>
     <head>
         <title>BcTutor</title>
@@ -145,3 +146,19 @@
         <?php include 'includes/footer.php'; ?>
     </body>
 </html>
+<?php } else { ?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>BcTutor</title>
+        <link rel="stylesheet" type="text/css" href="style/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <meta charset="UTF-8">
+    </head>
+    <body>
+	<?php include 'includes/navbar.php'; ?>
+
+	<div class="header"></div>	
+    </body>
+</html>
+<?php } ?>
