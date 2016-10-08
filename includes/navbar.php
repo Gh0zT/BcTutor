@@ -1,5 +1,3 @@
-<?php session_start(); ?>
-
 <nav>
     <div class="wrapper">
         <h1 id="logo">BcTutor</h1>

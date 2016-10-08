@@ -158,7 +158,13 @@ if(!(isset($_SESSION['user'])) && !($_SESSION['logged_in'] == true)) { ?>
     <body>
 	<?php include 'includes/navbar.php'; ?>
 
-	<div class="header"></div>	
+	<div class="header"></div>
+
+	<div class="wrapper">
+		<p>Welkom op BcTutor, de bijles site van het Baudartius College! </p>
+
+	
+	</div>	
     </body>
 </html>
 <?php } ?>
