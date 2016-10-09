@@ -114,56 +114,119 @@ h3 {
     font-size: 15pt;
     color: #3d464d;
 }
+.blurb-container {
+    width: 1200px;
+    margin: 100px auto;
+    box-sizing: border-box;
+}
+.blurb {
+    width: 393px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: justify;
+    text-justify: inter-word;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.blurb h5 {
+    text-align: center;
+    font-size: 18px;
+    color: #007ee5;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+.blurb div {
+    text-align: center;
+    height: 180px;
+    position: relative;;
+}
+.blurb div img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+}
 .grid {
     margin: 0 auto;
-    width: 1000px;
+    width: 1200px;
     box-sizing: border-box;
+}
+.tile-wrapper {
+    width: 220px;
+    height: 220px;
+    display: inline-block;
+    float: left; 
+    margin: 10px;
+    
 }
 .tile {
-    width: 180px;
-    height: 180px;
-    display: inline-block;
+    width: 220px;
+    height: 220px;
+    display: inline-flex;
     background-size: cover;
-    float: left;
-    margin: 10px;
+    background-clip: content-box;
     box-sizing: border-box;
     vertical-align: top;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    transform: scale(1);
+    transition: 0.15s all ease;
 }
-@media screen and (max-width: 1400px) {
+.tile-wrapper:hover .tile {
+    transform: scale(0.9);
+    cursor: pointer;
+}
+.tile p a {
+    background-color: #007ee5;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    color: white;
+    padding: 5px 10px 5px 10px;
+    border-radius: 4px;
+}
+@media screen and (max-width: 1640px) {
     .grid {
-        width: 800px;
-    }
-    .tile {
-        
+        width: 960px;
     }
     .wrapper {
         width: 80%;
         margin: 0 10% 0 10%;
     }
-}
-@media screen and (max-width: 1100px) {
-    .grid {
-        width: 600px;
+    .blurb-container {
+        width: 960px;
     }
-    .tile {
-
+    .blurb {
+        width: 313px;
+    }
+}
+@media screen and (max-width: 1180px) {
+    .grid {
+        width: 720px;
     }
     .wrapper {
         width: 100%;
         margin: 0;
     }
+    .blurb-container {
+        width: 720px;
+    }
+    .blurb {
+        width: 233px;
+    }
 }
 @media screen and (max-width: 800px) {
     .grid {
-        width: 400px;
+        width: 480px;
     }
-    .tile {
-
+    .blurb-container {
+        width: 480px;
     }
-}
-
-.tile p {
-    margin-top: 40px;
+    .blurb {
+        width: 473px;
+    }
 }
 
 /* forms and buttons */
