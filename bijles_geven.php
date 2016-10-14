@@ -15,6 +15,8 @@ if(!($_SESSION['logged_in'] == true)) {
         	<link rel="stylesheet" type="text/css" href="style/style.css">
         	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 	        <meta charset="UTF-8">
+
+		<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js?ver=1.4.2'></script>
 	</head>
 	<body>
 		<?php include 'includes/navbar.php'; ?>
@@ -36,14 +38,52 @@ if(!($_SESSION['logged_in'] == true)) {
                                 <p>Zodra uit het gesprek blijkt dat je aan alle voorwaarden voldoet, kun je beginnen met bijles geven! Je verdient hiermee 5 euro per uur en de school stelt een ruimte beschikbaar waar je rustig kunt zitten om bijles te geven.</p>
                         </div>
 		</div>
-
-			<div class="grid">
-				<?php
+              	<hr class="big-divider">
+		<div class="grid">
+			<?php
 $result = mysql_query("SELECT * FROM `Vakken` ORDER BY Vak");
 while($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-	echo "<div class='tile-wrapper'><div class='tile' style='background-image: url(source/images/vakken/" . $row['Afbeelding'] . ");'><p><a>" . $row['Vak'] . "</a></p></div></div>";
-}				?>
-			</div>
+	echo "<div class='tile-wrapper' onclick='registerBoxAppear(\"" . $row['Vak'] . "\")'><div class='tile' style='background-image: url(source/images/vakken/" . $row['Afbeelding'] . ");'><p><a>" . $row['Vak'] . "</a></p></div></div>";
+}			?>
+		</div>
+
+	<div id="register-container">
+            <div class="entry other-popup">
+                <h3 class="entry-caption">Bijles geven</h3>
+                <div id="close-register" class="close-popup"></div>
+
+                <form class="login-form" method="POST" action="register.php">
+		    <p>Je bent je aan het aanmelden om bijles te geven in <span class="highlight" id="hoofdvak"></span></p>
+                    <input type="text" name="Klas" placeholder="Klas" required>
+		    <!--<input type="hidden" name="Hoofdvak" value="!!!">-->
+                    <button type="sumbit" name="submit-registration">Registreer</button>
+                </form>
+            </div>
+
+            <script>
+                $(document).ready(function(){
+                    $("#register-container").hide();
+                });
+		
+                function registerBoxAppear(vak) {
+                    $("#register-container").fadeIn(500);
+      		    $('body').addClass('stop-scrolling');
+                    document.getElementById("hoofdvak").innerHTML = vak;
+                };
+
+                $('html').click(function (e) {
+                    if (e.target.id == 'register-container') {
+                        $("#register-container").fadeOut(500);
+                    }
+                });
+
+                $('#close-register').click(function() {
+                    $("#register-container").fadeOut(500);
+  		    $('body').removeClass('stop-scrolling');
+                });
+            </script>
+        </div>
+
 	</body>
 </html>
 <?php } ?>
