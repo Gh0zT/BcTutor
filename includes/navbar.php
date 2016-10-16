@@ -1,6 +1,6 @@
 <nav>
     <div class="wrapper">
-        <h1 class="left reset-margin">BcTutor</h1>
+        <h1 class="logo left">BcTutor</h1>
         <ul class="right reset-margin text-align-right">
             <li><a href="bijles_geven.php">Bijles geven</a></li><!--
             --><li><a href="bijles_krijgen.php">Bijles krijgen</a></li><!--

@@ -116,6 +116,14 @@ nav {
     overflow: hidden;
     border-bottom: 1px solid #D0D4D9;
 }
+nav .logo {
+    display: block;
+    color: #007ee5;
+    font: 26pt 'Open Sans', sans-serif;
+    padding: 12pt 0;
+    margin: 0;
+    line-height: 26pt;
+}
 nav h1 {
     line-height: 50pt;
     color: #007ee5;
