@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-
 <?php session_start();
-
-if(!(isset($_SESSION['user'])) && !($_SESSION['logged_in'] == true)) { ?>
+if(!(isset($_SESSION['user'])) && !(isset($_SESSION['logged_in']))) { ?>
 <html>
     <head>
         <title>BcTutor</title>
@@ -16,12 +14,12 @@ if(!(isset($_SESSION['user'])) && !($_SESSION['logged_in'] == true)) { ?>
     <body>
         <?php include 'includes/navbar.php'; ?>
         
-        <div id="register-container">
-            <div class="entry register">
-                <h3 class="entry-caption">Registreer</h3>
-		<div id="close-register" class="close-popup"></div>
-
-               	<form class="login-form" method="POST" action="register.php">
+        <!-- Register user popup -->
+        <div class="popup">
+            <div class="form-container">
+                <h3>Registreer</h3>
+		        <div class="close-popup"></div>
+               	<form method="POST" action="register.php">
                     <input type="text" name="Voornaam" placeholder="Voornaam" required>
                     <input type="text" name="Tussenvoegsel" placeholder="Tussenvoegsel">
                     <input type="text" name="Achternaam" placeholder="Achternaam" required>
@@ -29,37 +27,36 @@ if(!(isset($_SESSION['user'])) && !($_SESSION['logged_in'] == true)) { ?>
                     <input type="text" name="Gebruikersnaam" placeholder="Gebruikersnaam" required>
                     <input type="password" name="Wachtwoord" placeholder="Wachtwoord" required>
                     <input type="email" name="Email" placeholder="E-mail" required>
-		    <button type="sumbit" name="submit-registration">Registreer</button>
+		            <button type="sumbit" name="submit-registration">Registreer</button>
                 </form>
             </div>
-            
             <script>
-                $(document).ready(function(){
-                    $("#register-container").hide();
-                });
-            
-                function registerBoxAppear() {
-                    $("#register-container").fadeIn(500);
+                function registerBoxAppear(width, height) {
+                    $(".popup").fadeIn(500);
+                    $(".popup").css("display", "flex");
+                    $(".form-container").css("width", width);
+                    $(".form-container").css("height", height);
                 };
-
-		$('html').click(function (e) {
-   		    if (e.target.id == 'register-container') {
-      			$("#register-container").fadeOut(500);
-    		    }
-		});
-		
-		$('#close-register').click(function() {
-		    $("#register-container").fadeOut(500);	
-		}); 
+                $('html').click(function (e) {
+                    if ( $(e.target).hasClass("popup") ) {
+                        $(".popup").fadeOut(500);
+                    }
+                });
+                $('.close-popup').click(function() {
+                    $(".popup").fadeOut(500);
+                }); 
             </script>
         </div>
 
+        <!-- Content -->
         <div id="content">
             <h2 id="caption">Hier komt een fancy slogan die je onder andere<br> aanmoedigd om je aan te melden voor de site!</h2>
             
-            <div class="entry login">
-                <h3 class="entry-caption">Login</h3>
+            <!-- Login -->
+            <div class="form-container entry right">
+                <h3>Login</h3>
 
+                <!-- Magister login (visible) -->
                 <form id="magister-login" action="login-magister.php" class="login-form">
                     <p>Log in met je Magister account</p>
 
@@ -69,11 +66,11 @@ if(!(isset($_SESSION['user'])) && !($_SESSION['logged_in'] == true)) { ?>
                     <input checked="checked" type="checkbox" id="rememberme" name="remember_me">
                     <label for="remember">Mijn gegevens onthouden</label>
 
-                    <button class="margin-reset right" type="submit">Inloggen</button>
+                    <button class="right" type="submit">Inloggen</button>
                     
                     <table>
                         <tr>
-                            <td class="text-right"><p>Wachtwoord vergeten?</p></td>
+                            <td class="text-align-right"><p>Wachtwoord vergeten?</p></td>
                         </tr>
                         <tr>
                             <td><a target="_blank" href="https://baudartius.magister.net/#/wachtwoord-vergeten" class="right">Wachtwoordherstel</a></td>
@@ -81,6 +78,7 @@ if(!(isset($_SESSION['user'])) && !($_SESSION['logged_in'] == true)) { ?>
                     </table>
                 </form>
                 
+                <!-- BcTutor login (hidden) -->
                 <form id="normal-login" action="login.php" class="login-form" method="POST">
                     <p>Log in met je BcTutor account</p>
 
@@ -90,15 +88,15 @@ if(!(isset($_SESSION['user'])) && !($_SESSION['logged_in'] == true)) { ?>
                     <input checked="checked" type="checkbox" id="rememberme" name="remember_me">
                     <label for="remember">Mijn gegevens onthouden</label>
 
-                    <button class="margin-reset right" type="submit" name="submit-login">Inloggen</button><br>
+                    <button class="right" type="submit" name="submit-login">Inloggen</button><br>
                     
                     <table>
                         <tr>
                             <td><p>Nog geen BcTutor account?</p></td>
-                            <td class="text-right"><p>Wachtwoord vergeten?</p></td>
+                            <td class="text-align-right"><p>Wachtwoord vergeten?</p></td>
                         </tr>
                         <tr>
-                            <td><a onclick="registerBoxAppear()" href="#" class="left">Account aanmaken</a></td>
+                            <td><a onclick="registerBoxAppear('500px', 'auto')" href="#" class="left">Account aanmaken</a></td>
                             <td><a href="forgot-pass.php" class="right">Wachtwoordherstel</a></td>
                         </tr>
                     </table>
@@ -106,7 +104,7 @@ if(!(isset($_SESSION['user'])) && !($_SESSION['logged_in'] == true)) { ?>
 
                 <div class="divider"></div>
                 
-                <button id="change-logintype">Log in met je BcTutor account</button>
+                <button class="full-width" id="change-logintype">Log in met je BcTutor account</button>
 
                 <script>
                     $(document).ready(function(){
@@ -118,9 +116,10 @@ if(!(isset($_SESSION['user'])) && !($_SESSION['logged_in'] == true)) { ?>
                     
                     $("#change-logintype").click(function(){
                         if ($busy == 0) {
-                            $busy = 1;
                             
+                            $busy = 1;
                             if ($loginType == 1) {
+                                
                                 $("#change-logintype").html('Log in met je Magister account');
                                 $("#magister-login").fadeOut(500, function() {
                                     $("#normal-login").fadeIn(500, function() {
@@ -128,7 +127,9 @@ if(!(isset($_SESSION['user'])) && !($_SESSION['logged_in'] == true)) { ?>
                                     });
                                 });
                                 $loginType = 2;
+                                
                             } else {
+                                
                                 $("#change-logintype").html('Log in met je BcTutor account');
                                 $("#normal-login").fadeOut(500, function() {
                                     $("#magister-login").fadeIn(500, function() {
