@@ -52,11 +52,17 @@ while($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
                 <h3 class="entry-caption">Bijles geven</h3>
                 <div id="close-register" class="close-popup"></div>
 
-                <form class="login-form" method="POST" action="register.php">
+                <form class="login-form" method="POST" action="">
 		    <p>Je bent je aan het aanmelden om bijles te geven in <span class="highlight" id="hoofdvak"></span></p>
                     <input type="text" name="Klas" placeholder="Klas" required>
+		    <input type="text" name="Extravak" placeholder="Extra vakken" required>
+
+		    <input type="checkbox" id="" name="voorwaarden">
+                    <label for=""><div id="voorwaarden" style="display:none;"</div>Hierbij ga ik akkoord met de <a href="voorwaarden;" onClick="document.getElementById('voorwaarden').style.display='block';">Hierbij de voorwaarden.</label>
+
+
 		    <!--<input type="hidden" name="Hoofdvak" value="!!!">-->
-                    <button type="sumbit" name="submit-registration">Registreer</button>
+                    <button type="sumbit" name="submit-bijlesgeven">Opslaan</button>
                 </form>
             </div>
 
