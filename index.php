@@ -31,7 +31,7 @@ if(!(isset($_SESSION['user'])) && !(isset($_SESSION['logged_in']))) { ?>
                 </form>
             </div>
             <script>
-                function registerBoxAppear(width, height) {
+                function createPopup(width, height) {
                     $(".popup").fadeIn(500);
                     $(".popup").css("display", "flex");
                     $(".form-container").css("width", width);
@@ -96,7 +96,7 @@ if(!(isset($_SESSION['user'])) && !(isset($_SESSION['logged_in']))) { ?>
                             <td class="text-align-right"><p>Wachtwoord vergeten?</p></td>
                         </tr>
                         <tr>
-                            <td><a onclick="registerBoxAppear('500px', 'auto')" href="#" class="left">Account aanmaken</a></td>
+                            <td><a onclick="createPopup('400px', 'auto')" href="#" class="left">Account aanmaken</a></td>
                             <td><a href="forgot-pass.php" class="right">Wachtwoordherstel</a></td>
                         </tr>
                     </table>

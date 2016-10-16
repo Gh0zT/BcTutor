@@ -7,7 +7,7 @@
             --><li><a href="settings.php">Instellingen</a></li>
             <?php 
                 if(isset($_SESSION['user']) && ($_SESSION['user'] == true)) {
-                        echo '<li><p><a href="logout.php">Logout</a></p></li>'; 
+                        echo '<li><a href="logout.php">Logout</a></li>'; 
                 }
             ?>
         </ul>
