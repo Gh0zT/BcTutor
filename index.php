@@ -31,7 +31,7 @@ if(!(isset($_SESSION['user'])) && !(isset($_SESSION['logged_in']))) { ?>
                 </form>
             </div>
             <script>
-                function registerBoxAppear(width, height) {
+                function createPopup(width, height) {
                     $(".popup").fadeIn(500);
                     $(".popup").css("display", "flex");
                     $(".form-container").css("width", width);
@@ -96,7 +96,7 @@ if(!(isset($_SESSION['user'])) && !(isset($_SESSION['logged_in']))) { ?>
                             <td class="text-align-right"><p>Wachtwoord vergeten?</p></td>
                         </tr>
                         <tr>
-                            <td><a onclick="registerBoxAppear('500px', 'auto')" href="#" class="left">Account aanmaken</a></td>
+                            <td><a onclick="createPopup('400px', 'auto')" href="#" class="left">Account aanmaken</a></td>
                             <td><a href="forgot-pass.php" class="right">Wachtwoordherstel</a></td>
                         </tr>
                     </table>
@@ -147,25 +147,6 @@ if(!(isset($_SESSION['user'])) && !(isset($_SESSION['logged_in']))) { ?>
         <?php include 'includes/footer.php'; ?>
     </body>
 </html>
-<?php } else { ?>
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>BcTutor</title>
-        <link rel="stylesheet" type="text/css" href="style/style.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-        <meta charset="UTF-8">
-    </head>
-    <body>
-	<?php include 'includes/navbar.php'; ?>
-
-	<div class="header"></div>
-
-	<div class="wrapper">
-		<p><?php echo 'Welkom ' . $_SESSION['user'] . ''; ?> op BcTutor, de bijles site van het Baudartius College! </p>
-
-	
-	</div>	
-    </body>
-</html>
-<?php } ?>
+<?php } else {
+    header('Location: dashboard.php');
+} ?>

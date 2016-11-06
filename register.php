@@ -23,7 +23,7 @@ function NewUser() {
     }
     else {
     
-        $query = "INSERT INTO `Register` (Voornaam,Tussenvoegsel,Achternaam,Geboortedatum,Gebruikersnaam,Wachtwoord,Email) VALUES ('$_POST[Voornaam]', '$_POST[Tussenvoegsel]', '$_POST[Achternaam]', '$_POST[Geboortedatum]', '$_POST[Gebruikersnaam]', '$_POST[Wachtwoord]', '$_POST[Email]')";
+        $query = "INSERT INTO `Users` (Voornaam,Tussenvoegsel,Achternaam,Geboortedatum,Gebruikersnaam,Wachtwoord,Email) VALUES ('$_POST[Voornaam]', '$_POST[Tussenvoegsel]', '$_POST[Achternaam]', '$_POST[Geboortedatum]', '$_POST[Gebruikersnaam]', '$_POST[Wachtwoord]', '$_POST[Email]')";
         $sql = mysql_query ($query) or die (mysql_error());
     
     if($sql) {
@@ -39,7 +39,7 @@ function SignUp() {
     
 if(!empty($_POST['Gebruikersnaam'])) { 
    
-    $query = mysql_query("SELECT * FROM `Register` WHERE Gebruikersnaam = '$_POST[Gebruikersnaam]'") or die(mysql_error());
+    $query = mysql_query("SELECT * FROM `Users` WHERE Gebruikersnaam = '$_POST[Gebruikersnaam]'") or die(mysql_error());
     
     if(!$row = mysql_fetch_array($query)) {
         

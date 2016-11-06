@@ -113,7 +113,6 @@ nav {
     height: 50pt;
     position: fixed;
     top: 0;
-    overflow: hidden;
     border-bottom: 1px solid #D0D4D9;
 }
 nav .logo {
@@ -132,14 +131,16 @@ nav h1 {
 nav ul {
     display: inline;
 }
-nav ul li {
+nav ul > li {
     border: 2px solid transparent;
     box-sizing: border-box;
     height: 30pt;
     margin: 9pt 0 9pt 0;
     display: inline-table;
+    vertical-align: top;
+    position: relative;
 }
-nav ul li a {
+nav ul > li > a {
     display: table-cell;
     vertical-align: middle;
     text-align: center;
@@ -147,9 +148,25 @@ nav ul li a {
     height: 100%;
     padding: 0 16pt;
 }
-nav ul li:hover {
+nav ul > li:hover {
     border: 2px solid #2895F1;
     border-radius: 8px;
+}
+nav ul > li > .dropdown {
+    display: none;
+    position: absolute;
+    width: 100%;
+    margin: 30pt 0 0 0;
+    top: 0;
+    left: 0;
+    padding: 0;
+}
+nav ul > li > .dropdown > li {
+    width: 100%;
+    margin: 0;
+}
+nav ul > li:hover > .dropdown {
+    display: block;
 }
 /* END OF NAVBAR */
 
@@ -406,4 +423,33 @@ nav ul li:hover {
     -moz-box-sizing: border-box; 
     -webkit-box-sizing: border-box; 
     box-sizing: border-box;
+}
+
+
+
+.voorwaarden {
+    position: relative;
+}
+.voorwaarden::after {
+    color: white;
+    content: "Algemene voorwaarden. tadaaaaaaa";
+    opacity: 0;
+    position: absolute;
+    background-color: #292929;
+    border-radius: 8px;
+    padding: 0px;
+    overflow: hidden;
+    box-sizing: border-box;   
+    width: 250px;
+    height: 0px;
+    top: -108px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.5s;
+    overflow: hidden;
+}
+.voorwaarden:hover::after {
+    opacity: 0.88;  
+    height: 100px;
+    padding: 8px;
 }

@@ -53,12 +53,12 @@ if(isset($_POST['submit-settings-username'])) {
 	if($_SESSION['user'] == true) {
 		if($changeusername !== '') {
 			
-			$query = mysql_query("SELECT * FROM `Register` WHERE Gebruikersnaam='$changeusername'") or die(mysql_error());
+			$query = mysql_query("SELECT * FROM `Users` WHERE Gebruikersnaam='$changeusername'") or die(mysql_error());
 			$count = mysql_num_rows($query);
 
 		        if($count==0) {
 	
-				$result = mysql_query("UPDATE `Register` SET Gebruikersnaam='$changeusername' WHERE ID='$ID'");
+				$result = mysql_query("UPDATE `Users` SET Gebruikersnaam='$changeusername' WHERE ID='$ID'");
 				echo"Aanpassingen gemaakt!";
 			}
 			else {
@@ -78,7 +78,7 @@ if(isset($_POST['submit-settings-password'])) {
         if($_SESSION['user'] == true) {
                 if($changepassword !== '') {
 
-                        $query = mysql_query("SELECT * FROM `Register` WHERE Wachtwoord='$changepassword'") or die(mysql_error());
+                        $query = mysql_query("SELECT * FROM `Users` WHERE Wachtwoord='$changepassword'") or die(mysql_error());
                         $count = mysql_num_rows($query);
 
                         if($count==0) {
