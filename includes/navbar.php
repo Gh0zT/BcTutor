@@ -13,7 +13,6 @@
  		<a>Welkom <?php echo $_SESSION['user']; ?></a>
 	        <ul class="dropdown">
 		    <li><a>Status</a></li>
-		    <li><a href="settings.php">Instellingen</a></li>
 		    <li><a href="logout.php">Uitloggen</a></li>
               	</ul>
 	    </li>

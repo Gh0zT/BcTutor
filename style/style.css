@@ -87,6 +87,10 @@ input[type=checkbox] {
     width: 70%;
     margin: 0 15% 0 15%;
 }
+.small-wrapper {
+    width: 60%;
+    margin: 0 20% 0 20%;
+}
 .divider {
     text-align: center;
     border-bottom: 1px solid #808080;
@@ -102,6 +106,77 @@ input[type=checkbox] {
     color: #595959;
     background-color: #f6f9fc;
     padding: 0 6px;
+}
+.voorwaarden {
+    position: relative;
+}
+.voorwaarden::after {
+    color: white;
+    content: "Algemene voorwaarden. tadaaaaaaa";
+    opacity: 0;
+    position: absolute;
+    background-color: #292929;
+    border-radius: 8px;
+    padding: 0px;
+    overflow: hidden;
+    box-sizing: border-box;
+    width: 250px;
+    height: 0px;
+    top: -108px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.5s;
+    overflow: hidden;
+}
+.voorwaarden:hover::after {
+    opacity: 0.88;
+    height: 100px;
+    padding: 8px;
+}
+.fill-space {
+    width: calc(100% - 160px);
+}
+.tablewrapper {
+    display: inline-block;
+    width: 100%;
+    margin-left: 40px;
+}
+.adminview {
+    width: 60%;
+}
+.adminview h3 {
+    display: block;
+    font: 30px 'Open Sans';
+    margin: 0 0 0 40px;
+    padding: 0;
+}
+.tablewrapper table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.tablewrapper th {
+    border-bottom: 3px solid #4D4C4C;
+    text-align: left;
+    height: 28px;
+}
+.tablewrapper th a {
+    font: 800 14px 'Open Sans';
+    color: black;
+}
+.tablewrapper td {
+    border-bottom: 1px solid #4D4C4C;
+    font: 800 14px 'Open Sans';
+    height: 22px;
+}
+.adminview {
+    width: 60%;
+    margin: 0 20% 0 20%;
+}
+.adminsidebar {
+    display: inline-block;
+    width: 160px;
+    height: 500px;
+    background-color: red;
 }
 /* END OF APPLICABLE DEFAULTS */
 
@@ -283,7 +358,7 @@ nav ul > li:hover > .dropdown {
 /* BIJLES GEVEN */
 .blurb-container {
     width: 1200px;
-    margin: 100px auto 50px auto;
+    margin: 150px auto 50px auto;
     box-sizing: border-box;
 }
 .blurb {
@@ -400,6 +475,31 @@ nav ul > li:hover > .dropdown {
     }
 }
 /* END OF BIJLES GEVEN */
+
+/* DASHBOARD */
+.welcome {
+    border: 2px solid #121212;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+}
+.welcome p {
+    
+}
+
+
+
+
+
+
+
+
+/* END OF DASHBOARD */
+
+
+
+
+
+
 
 /* OTHERS */
 .header {

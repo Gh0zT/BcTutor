@@ -12,7 +12,7 @@ if(isset($_POST['submit-login'])) {
 	$myusername = $_POST['myusername'];
 	$mypassword = $_POST['mypassword'];
 
-	$sql = "SELECT * FROM `Users` WHERE Gebruikersnaam='$myusername' OR Email='$myusername' AND Wachtwoord='$mypassword'";
+	$sql = "SELECT * FROM `Users` WHERE Gebruikersnaam='$myusername' AND Wachtwoord='$mypassword' OR Email='$myusername' AND Wachtwoord='$mypassword'";
 	$result = mysql_query($sql);
 
 	$count = mysql_num_rows($result);

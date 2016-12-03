@@ -17,10 +17,11 @@ if(!($_SESSION['logged_in'] == true)) {
         <meta charset="UTF-8">
 
         <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js?ver=1.4.2'></script>
-    </head>
+     </head>
 
     <body>
         <?php include 'includes/navbar.php'; ?>
+
             <div class="blurb-container">
                 <div class="blurb">
                     <div><img src="source/images/icon_aanmelden_512px.png"></div>
@@ -54,60 +55,17 @@ if(!($_SESSION['logged_in'] == true)) {
                     <div class="close-popup"></div>
                     <form method="POST" action="">
                         <p>Je bent je aan het aanmelden om bijles te geven in het vak <span class="highlight" id="hoofdvak"></span></p>
-                        <input type="text" name="Klas" placeholder="Klas" required>
-			<select id="list-niveau">
-			    <option>selecteer...</option>
-  			    <option>MAVO</option>
-			    <option>HAVO</option>
-			    <option>VWO</option>
-			</select>
-			<select id="list-mavo-klassen">
-			    <option>MAVO klas 1</option>
-			    <option>MAVO klas 2</option>
-			    <option>MAVO klas 3</option>
-			</select>
-                        <select id="list-havo-klassen">
-                            <option>HAVO klas 1</option>
-                            <option>HAVO klas 2</option>
-                            <option>HAVO klas 3</option>
+			<select>
+                            <?php 
+				$result = mysql_query("SELECT v.Vak 'vak' FROM Vakken v");
+				while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+				    echo "<option>" . $row['vak'] . "</option>";
+				}
+			    ?>				
                         </select>
-			<select id="list-vwo-klassen">
-                            <option>VWO klas 1</option>
-                            <option>VWO klas 2</option>
-                            <option>VWO klas 3</option>
-                        </select>
-			<script>
-$(document).ready(function () {
-    resetFields();
-    $("#list-niveau").change(function () {
-        resetFields();
-    });
-
-});
-function resetFields() {
-    if ($("#list-niveau").val() === "selecteer...") {
-        $("#list-mavo-klassen").hide();
-	$("#list-havo-klassen").hide();
-	$("#list-vwo-klassen").hide();
-    } else if ($("#list-niveau").val() === "MAVO") {
-        $("#list-mavo-klassen").show();
-        $("#list-havo-klassen").hide();
-        $("#list-vwo-klassen").hide();
-    } else if ($("#list-niveau").val() === "HAVO") {
-        $("#list-mavo-klassen").hide();
-        $("#list-havo-klassen").show();
-        $("#list-vwo-klassen").hide();
-    } else if ($("#list-niveau").val() === "VWO") {
-        $("#list-mavo-klassen").hide();
-        $("#list-havo-klassen").hide();
-        $("#list-vwo-klassen").show();
-    }
-}
-			</script>
 
                         <!--<input type="hidden" name="Hoofdvak" value="!!!">-->
 			<!-- extra vak -->
-			<!-- (achter)naam -->
 		
 	                <input type="checkbox" name="voorwaarden">
         	        <label for="voorwaarden">Ik heb de <a class="voorwaarden" href="#">algemene voorwaarden</a> gelezen en ga hiermee akkoord.</label>

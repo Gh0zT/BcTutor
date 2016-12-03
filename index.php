@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php session_start();
+include("register.php");
 if(!(isset($_SESSION['user'])) && !(isset($_SESSION['logged_in']))) { ?>
 <html>
     <head>
@@ -20,15 +21,73 @@ if(!(isset($_SESSION['user'])) && !(isset($_SESSION['logged_in']))) { ?>
                 <h3>Registreer</h3>
 		        <div class="close-popup"></div>
                	<form method="POST" action="register.php">
-                    <input type="text" name="Voornaam" placeholder="Voornaam" required>
+                    <input type="text" name="Voornaam" placeholder="Voornaam">
                     <input type="text" name="Tussenvoegsel" placeholder="Tussenvoegsel">
-                    <input type="text" name="Achternaam" placeholder="Achternaam" required>
-                    <input type="text" name="Geboortedatum" placeholder="Geboortedatum yyyy-mm-dd" onfocus="(this.type='date')" required>
-                    <input type="text" name="Gebruikersnaam" placeholder="Gebruikersnaam" required>
-                    <input type="password" name="Wachtwoord" placeholder="Wachtwoord" required>
-                    <input type="email" name="Email" placeholder="E-mail" required>
-		            <button type="sumbit" name="submit-registration">Registreer</button>
+                    <input type="text" name="Achternaam" placeholder="Achternaam">
+                    <input type="text" name="Geboortedatum" placeholder="Geboortedatum yyyy-mm-dd" onfocus="(this.type='date')">
+                    <input type="text" name="Gebruikersnaam" placeholder="Gebruikersnaam">
+                    <input type="password" name="Wachtwoord" placeholder="Wachtwoord">
+                    <input type="email" name="Email" placeholder="E-mail">
+
+                        <select name="niveau" id="list-niveau">
+                            <option>Selecteer...</option>
+                            <option>MAVO</option>
+                            <option>HAVO</option>
+                            <option>VWO</option>
+                        </select>
+                        <select name="leerjaar" id="list-mavo-klassen">
+                            <option>Klas 1</option>
+                            <option>Klas 2</option>
+                            <option>Klas 3</option>
+                            <option>Klas 4</option>
+                        </select>
+                        <select name="leerjaar" id="list-havo-klassen">
+                            <option>Klas 1</option>
+                            <option>Klas 2</option>
+                            <option>Klas 3</option>
+                            <option>Klas 4</option>
+                            <option>Klas 5</option>
+                        </select>
+                        <select name="leerjaar" id="list-vwo-klassen">
+                            <option>Klas 1</option>
+                            <option>Klas 2</option>
+                            <option>Klas 3</option>
+                            <option>Klas 4</option>
+                            <option>Klas 5</option>
+                            <option>Klas 6</option>
+                        </select>
+                        <script>
+$(document).ready(function () {
+    resetFields();
+    $("#list-niveau").change(function () {
+        resetFields();
+    });
+
+});
+function resetFields() {
+    if ($("#list-niveau").val() === "Selecteer...") {
+        $("#list-mavo-klassen").hide();
+        $("#list-havo-klassen").hide();
+        $("#list-vwo-klassen").hide();
+    } else if ($("#list-niveau").val() === "MAVO") {
+        $("#list-mavo-klassen").show();
+        $("#list-havo-klassen").hide();
+        $("#list-vwo-klassen").hide();
+    } else if ($("#list-niveau").val() === "HAVO") {
+        $("#list-mavo-klassen").hide();
+        $("#list-havo-klassen").show();
+        $("#list-vwo-klassen").hide();
+    } else if ($("#list-niveau").val() === "VWO") {
+        $("#list-mavo-klassen").hide();
+        $("#list-havo-klassen").hide();
+        $("#list-vwo-klassen").show();
+    }
+}
+                        </script>
+		    <input style="text-transform: uppercase" type="text" name="Klas" placeholder="Klas">
+		    <button type="sumbit" name="submit-registration">Registreer</button>
                 </form>
+		<?php SignUp(); ?>
             </div>
             <script>
                 function createPopup(width, height) {

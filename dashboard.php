@@ -1,11 +1,183 @@
 <!DOCTYPE html>
 <?php session_start();
-if((isset($_SESSION['user'])) && (isset($_SESSION['logged_in']))) { ?>
+
+require("/var/www/dbconfig.php");
+require 'dbconnect.php';
+
+//check of gebruiker ingelogd is
+if((isset($_SESSION['user'])) && (isset($_SESSION['logged_in']))) { 
+    //check of gebruiker admin is
+    $id = $_SESSION['ID'];
+    $result = mysql_query("SELECT u.Admin FROM Users u WHERE u.ID='$id'");
+    $row = mysql_fetch_array($result); 
+    if($row['Admin'] == "ja"){
+?>
+<html>
+    <head>
+        <title>BcTutor</title>
+        <link rel="stylesheet" type="text/css" href="style/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <meta charset="UTF-8">
+
+        <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js?ver=1.4.2'></script>
+    </head>
+    <body>
+	<div class="adminview">
+	<!-- SEARCH BAR SCRIPT -->
+<script>
+function search() {
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("searchbar");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("searchtable");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+            if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        } 
+    }
+}
+</script>
+	<div class="adminsidebar left">
+	    <div class="adminsidebar view">
+		<?php
+		if(($_GET['view'] == "students") || !(isset($_GET['view']))){ ?>
+		    <a href="dashboard.php?view=tutors">Tutors</a>
+		    <a href="dashboard.php?view=aanmeldingen">Aanmeldingen</a>
+		<?php }
+		if($_GET['view'] == "tutors"){ ?>
+		    <a href="dashboard.php?view=students">Studenten</a>
+		    <a href="dashboard.php?view=aanmeldingen">Aanmeldingen</a>
+		<?php } 
+		if($_GET['view'] == "aanmeldingen"){?>
+		    <a href="dashboard.php?view=students">Studenten</a>
+		    <a href="dashboard.php?view=tutors">Tutors</a>
+		<?php } ?>
+	    </div>
+            <div></div>
+            <div></div>
+	</div>
+	<div class="fill-space right">
+	<?php
+	// IF VIEW IS STUDENTS
+	if(($_GET['view'] == "students") || !(isset($_GET['view']))){ ?>
+	    <h3 class="left">Studenten</h3>
+	    <input type="text" id="searchbar" onkeyup="search()" placeholder="Zoeken...">
+	<div class="tablewrapper left">
+	    <?php
+		$query = "SELECT u.ID 'ID', u.Voornaam 'Voornaam', u.Achternaam 'Achternaam', u.Tussenvoegsel 'Tussenvoegsel', u.Klas 'Klas' FROM Users u, Tutors t WHERE u.ID = t.Leerling ORDER BY u.Voornaam ASC";
+	    ?>
+	    <table id='searchtable'>
+		<tr>
+		    <?php if(!isset($_GET['voornaam'])){ ?>
+		    	<th><a href="dashboard.php?view=students&voornaam=desc">Voornaam )</a></th>
+		    <?php } else if($_GET['voornaam'] == "desc"){ ?>
+			<th><a href="dashboard.php?view=students&voornaam=asc">Voornaam v</a></th>
+		    <?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.Leerling ORDER BY u.Voornaam ASC";
+		    } else { ?>
+			<th><a href="dashboard.php?view=students&voornaam=desc">Voornaam ^</a></th>
+		    <?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.Leerling ORDER BY u.Voornaam DESC"; 
+		    } ?>
+
+		    <?php if(!isset($_GET['achternaam'])){ ?>
+                        <th><a href="dashboard.php?view=students&achternaam=desc">Achternaam )</a></th>
+                    <?php } else if($_GET['achternaam'] == "desc"){ ?>
+                        <th><a href="dashboard.php?view=students&achternaam=asc">Achternaam v</a></th>
+                    <?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.Leerling ORDER BY u.Achternaam ASC";
+                    } else { ?>
+                        <th><a href="dashboard.php?view=students&achternaam=desc">Achternaam ^</a></th>
+                    <?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.Leerling ORDER BY u.Achternaam DESC";
+                    } ?>
+
+		    <?php if(!isset($_GET['klas'])){ ?>
+                        <th><a href="dashboard.php?view=students&klas=desc">Klas )</a></th>
+                    <?php } else if($_GET['klas'] == "desc"){ ?>
+                        <th><a href="dashboard.php?view=students&klas=asc">Klas v</a></th>
+                    <?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.Leerling ORDER BY u.Klas ASC";
+                    } else { ?>
+                        <th><a href="dashboard.php?view=students&klas=desc">Klas ^</a></th>
+                    <?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.Leerling ORDER BY u.Klas DESC";
+                    } ?>
+
+		</tr>	
+		<?php
+                $result = mysql_query($query);
+                while ( $row = mysql_fetch_array($result) ) {
+                    echo "<tr><td>" . $row['Voornaam'] . "</td>";
+                    echo "<td>" . $row['Tussenvoegsel'] . " " . $row['Achternaam'] . "</td>";
+                    echo "<td>" . $row['Klas'] . "</td></tr>";
+                }
+            ?>
+	    </table>
+
+	<?php
+	// IF VIEW IS TUTORS
+	} else if($_GET['view'] == "tutors"){ ?>
+	    <h3 class="left">Tutors</h3>
+	<div class="tablewrapper left">
+	    <?php
+		$query = "SELECT u.ID 'ID', u.Voornaam 'Voornaam', u.Achternaam 'Achternaam', u.Tussenvoegsel 'Tussenvoegsel', u.Klas 'Klas' FROM Users u, Tutors t WHERE u.ID = t.Tutor ORDER BY u.Voornaam ASC";
+	    ?>
+	    <table>
+	    <tr>
+		<?php if(!isset($_GET['voornaam'])){ ?>
+		    <th><a href="dashboard.php?view=tutors&voornaam=desc">Voornaam )</a></th>
+		<?php } else if($_GET['voornaam'] == "desc"){ ?>
+		    <th><a href="dashboard.php?view=tutors&voornaam=asc">Voornaam v</a></th>
+		<?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.tutor ORDER BY u.Voornaam ASC";
+		} else { ?>
+		    <th><a href="dashboard.php?view=tutors&voornaam=desc">Voornaam ^</a></th>
+		<?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.tutor ORDER BY u.Voornaam DESC";
+		} ?>
+	
+		<?php if(!isset($_GET['achternaam'])){ ?>
+                    <th><a href="dashboard.php?view=tutors&achternaam=desc">Achternaam )</a></th>
+                <?php } else if($_GET['achternaam'] == "desc"){ ?>
+                    <th><a href="dashboard.php?view=tutors&achternaam=asc">Achternaam v</a></th>
+                <?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.tutor ORDER BY u.Achternaam ASC";
+                } else { ?>
+                    <th><a href="dashboard.php?view=tutors&achternaam=desc">Achternaam ^</a></th>
+                <?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.tutor ORDER BY u.Achternaam DESC";
+                } ?>
+		
+		<?php if(!isset($_GET['klas'])){ ?>
+                    <th><a href="dashboard.php?view=tutors&klas=desc">Klas )</a></th>
+                <?php } else if($_GET['klas'] == "desc"){ ?>
+                    <th><a href="dashboard.php?view=tutors&klas=asc">Klas v</a></th>
+                <?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.tutor ORDER BY u.Klas ASC";
+                } else { ?>
+                    <th><a href="dashboard.php?view=tutors&klas=desc">Klas ^</a></th>
+                <?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.tutor ORDER BY u.Klas DESC";
+                } ?>
+	
+	    </tr>
+	    <?php
+		$result = mysql_query($query);
+		while ( $row = mysql_fetch_array($result) ) {
+		    echo "<tr><td>" . $row['Voornaam'] . "</td>";
+		    echo "<td>" . $row['Tussenvoegsel'] . " " . $row['Achternaam'] . "</td>";	
+		    echo "<td>" . $row['Klas'] . "</td></tr>";
+		}
+	    ?>
+	    </table>
+	</div>
+	<?php } else {
+	    echo "Geen tabel geselecteerd!";
+	} ?>
+	</div>
+	</div>
+    </body>
+</html>
 
 <?php 
-    require("/var/www/dbconfig.php");
-    require 'dbconnect.php';
-?>
+}else{ ?>
+
 <html>
     <head>
         <title>BcTutor</title>
@@ -25,7 +197,7 @@ if((isset($_SESSION['user'])) && (isset($_SESSION['logged_in']))) { ?>
 	
 	    <div class="dashboard">
 		<div class="bijlesgeven">
-			<div style="width: 40px; height: 40px; background-color: red;"></div>
+		    <div style="width: 40px; height: 40px; background-color: red;"></div>
 			<h6>Tutor</h6>
 			<p>
 			    <?php 
@@ -35,14 +207,14 @@ if((isset($_SESSION['user'])) && (isset($_SESSION['logged_in']))) { ?>
                             if ($row['Tutor'] == "nee") {
 				echo "Je bent nog niet aangemeld als Tutor! Klik <a>hier</a> om je aan te melden!";
 			    } else if ($row['Tutor'] == "ja") {
-				$result2 = mysql_query("SELECT u.Voornaam 'Voornaam', v.Vak 'Vak' FROM Users u, Tutors t, Vakken v WHERE v.ID = t.Vak AND u.ID = t.Leerling AND t.Tutor = $ID");
+				$result2 = mysql_query("SELECT u.Voornaam 'Voornaam', u.Tussenvoegsel 'Tussenvoegsel', u.Achternaam 'Achternaam', v.Vak 'Vak' FROM Users u, Tutors t, Vakken v WHERE v.ID = t.Vak AND u.ID = t.Leerling AND t.Tutor = $ID");
 				$i = 1;
 				while ( $row2 = mysql_fetch_array($result2) ) {
 				    if($i == 1) {
-				        echo "Je geeft momenteel bijles aan " . $row2['Voornaam'] . " in " . $row2['Vak'];
+				        echo "Je geeft momenteel bijles aan " . $row2['Voornaam'] . " " . $row2['Tussenvoegsel'] . " " . $row2['Achternaam'] . " in " . $row2['Vak'];
 				    }
 				    if($i != 1) {
-					echo ", en aan " . $row2['Voornaam'] . " in " . $row2['Vak'];
+					echo ", en aan " . $row2['Voornaam'] . " " . $row2['Tussenvoegsel'] . " " . $row2['Achternaam'] . " in " . $row2['Vak'];
 				    }
 				    if($i == mysql_num_rows($result2)) {
 					echo ".";	
@@ -68,14 +240,14 @@ if((isset($_SESSION['user'])) && (isset($_SESSION['logged_in']))) { ?>
 			if ($row['Leerling'] == "nee") {
 			    echo "Je hebt je nog niet aangemeld om bijles te krijgen! Klik <a>hier</a> om je daarvoor aan te melden.";
 			} else if ($row['Leerling'] == "ja") {
-			    $result2 = mysql_query("SELECT u.Voornaam 'Voornaam', v.Vak 'Vak' FROM Users u, Tutors t, Vakken v WHERE v.ID = t.Vak AND u.ID = t.Tutor AND t.Leerling = $ID");
+			    $result2 = mysql_query("SELECT u.Voornaam 'Voornaam', u.Tussenvoegsel 'Tussenvoegsel', u.Achternaam 'Achternaam', v.Vak 'Vak' FROM Users u, Tutors t, Vakken v WHERE v.ID = t.Vak AND u.ID = t.Tutor AND t.Leerling = $ID");
 			    $i = 1;
 			    while ( $row2 = mysql_fetch_array($result2) ) {
 				if($i == 1) {
-				    echo "Je krijgt bijles in " . $row2['Vak'] . " van " . $row2['Voornaam'];
+				    echo "Je krijgt bijles in " . $row2['Vak'] . " van " . $row2['Voornaam'] . " " . $row2['Tussenvoegsel'] . " " . $row2['Achternaam'];
 				}
                                	if($i != 1) {
-				    echo ", en in " . $row2['Vak'] . " van " . $row2['Voornaam'];
+				    echo ", en in " . $row2['Vak'] . " van " . $row2['Voornaam'] . " " . $row2['Tussenvoegsel'] . " " . $row2['Achternaam'];
 				}
   				if($i == mysql_num_rows($result2)) {
 				    echo ".";
@@ -87,7 +259,129 @@ if((isset($_SESSION['user'])) && (isset($_SESSION['logged_in']))) { ?>
 		    </p>	
 		</div>
 	    </div>
+
+                <div>
+                Instellingen! <?php echo 'Welkom ' . $_SESSION['user'] . ' !'; ?>
+                </div>
+                <div>
+
+                  <form style="width: 300px;" class="login-form" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                  <input type="text" name="changeusername" placeholder="Verander Gebruikersnaam">
+                  <button type="sumbit" name="submit-settings-username">Aanpassen</button>
+                  </form>
+                  <form style="width: 300px;" class="login-form" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                  <input type="password" name="changepassword" placeholder="Verander Wachtwoord">
+                  <button type="sumbit" name="submit-settings-password">Aanpassen</button>
+                  </form>
+                  <form style="width: 300px;" class="login-form" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                  <input type="email" name="changeemail" placeholder="Verander E-mail">
+                  <button type="sumbit" name="submit-settings-email">Aanpassen</button>
+                  </form>
+
+                </div>
 	</div>
+<?php
+
+$file = "/var/www/dbconfig.php";
+require($file);
+
+require 'dbconnect.php';
+
+$changeusername = $_POST['changeusername'];
+$changepassword = $_POST['changepassword'];
+$changeemail = $_POST['changeemail'];
+$ID = $_SESSION['ID'];
+
+
+if(isset($_POST['submit-settings-username'])) {
+
+        if($_SESSION['user'] == true) {
+                if($changeusername !== '') {
+
+                        $query = mysql_query("SELECT * FROM `Users` WHERE Gebruikersnaam='$changeusername'") or die(mysql_error());
+                        $count = mysql_num_rows($query);
+
+                        if($count==0) {
+                                $result = mysql_query("UPDATE `Users` SET Gebruikersnaam='$changeusername' WHERE ID='$ID'");
+                                echo"Aanpassingen gemaakt!";
+                        }
+                        else {
+                                echo"Deze gebruikersnaam is al in gebruik!";
+                        }
+                }
+                else {
+                        echo"Vul alstublieft een geldige waarde in!";
+                }
+        }
+        else {
+                echo"U moet ingelogd zijn om aanpassingen te maken!";
+        }
+}
+if(isset($_POST['submit-settings-password'])) {
+
+        if($_SESSION['user'] == true) {
+                if($changepassword !== '') {
+
+			$usersession = $_SESSION['user'];
+                        $query = mysql_query("SELECT Wachtwoord FROM `Users` WHERE Gebruikersnaam='$usersession'") or die(mysql_error());
+                        $count = mysql_num_rows($query);
+			$result2 = mysql_fetch_array($query);
+
+			if($result2['Wachtwoord'] == $changepassword) {
+				echo"Dit wachtwoord is al in gebruik!";
+				break;
+                        }	
+
+                        if($count==1) {
+
+                                $result = mysql_query("UPDATE `Users` SET Wachtwoord='$changepassword' WHERE Gebruikersnaam='$usersession'");
+                                echo"Aanpassingen gemaakt!";
+				echo"$pass";
+                        }
+                }
+                else {
+                        echo"Vul alstublieft een geldige waarde in!";
+                }
+        }
+        else {
+                echo"U moet ingelogd zijn om aanpassingen te maken!";
+        }
+}
+if(isset($_POST['submit-settings-email'])) {
+
+        if($_SESSION['user'] == true) {
+                if($changeemail !== '') {
+
+                        $query = mysql_query("SELECT * FROM `Users` WHERE Email='$changeemail'") or die(mysql_error());
+                        $count = mysql_num_rows($query);
+
+                        if($count==0) {
+
+                                $result = mysql_query("UPDATE `Users` SET Email='$changeemail' WHERE ID='$ID'");
+                                echo"Aanpassingen gemaakt!";
+                        }
+                        else {
+                                echo"Dit e-mailadres is al in gebruik!";
+                        }
+                }
+                else {
+                        echo"Vul alstublieft een geldige waarde in!";
+                }
+        }
+        else {
+                echo"U moet ingelogd zijn om aanpassingen te maken!";
+        }
+}
+
+
+?>
+
     </body>
 </html>
-<?php } ?>
+<?php }
+} else {
+
+header('Location: index.php');
+
+}
+?>
