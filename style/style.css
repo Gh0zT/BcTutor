@@ -6,83 +6,13 @@
 .text-align-center { text-align: center; }
 .reset-margin { margin: 0; }
 .full-width { width: 100%; }
+.hide { display: none; }
+.show { display: initial; }
+.visible { visibility: visible; }
+.invisible { visibility: hidden; }
 /* END OF UTILITY CLASSES */
 
-/* DEFAULTS */
-html {
-    height: 100%;
-}
-body {
-    margin: 50pt 0 0 0;
-    background-color: #ffffff;
-    background-image: url(../source/images/cubes.png);
-    height: 100%;
-}
-a {
-    color: #007ee5;
-    font: 14px 'Open Sans', sans-serif;
-    text-decoration: none;
-}
-p, label, input {
-    color: #3d464d;
-    font: 14px 'Open Sans', sans-serif;
-}
-h2 {
-    color: #ffffff;
-    font: 200 28px 'Open Sans', sans-serif;
-}
-h3 {
-    color: #3d464d;
-    font: 200 20px 'Open Sans', sans-serif;
-}
-input[type="button"], button {
-    background-color: #007ee5;
-    color: #ffffff;
-    width: 100px;
-    height: 36px;
-    border: 2px solid #007ee5;
-    border-radius: 5px;
-    margin: 20px 0 0 0;
-}
-input[type="button"]:hover, button:hover {
-    background-color: #3297e9;
-    cursor: pointer;
-}
-input[type=text], input[type=password], input[type=email], input[type=date], textarea{
-    -webkit-transition: all 0.30s ease-in-out;
-    -moz-transition: all 0.30s ease-in-out;
-    -ms-transition: all 0.30s ease-in-out;
-    -o-transition: all 0.30s ease-in-out;
-    outline: none;
-    border: 2px solid #D0D4D9;
-    width: calc(100% - 36px);
-    font-size: 16px;
-    font-family: "Open Sans", sans-serif;
-    padding: 4px 16px;
-    height: 24pt;
-    border-radius: 8px;
-    margin-bottom: 10px;
-}
-input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=date]:focus, textarea:focus {
-    box-shadow: 0 0 7px rgba(91, 213, 255, 1);
-    border: 2px solid rgba(91, 213, 255, 1);
-}
-input[type=checkbox] {
-    margin-top: 18px;
-    vertical-align: middle;
-    position: relative;
-    bottom: 8px;
-}
-/* END OF DEFAULTS */
-
 /* APPLICABLE DEFAULTS */
-.highlight {
-    background-color: #007ee5;
-    color: #ffffff;
-    border-radius: 4px;
-    padding: 2px 5px 2px 5px;
-    margin: 0 3px;
-}
 .wrapper {
     width: 70%;
     margin: 0 15% 0 15%;
@@ -246,7 +176,7 @@ nav ul > li:hover > .dropdown {
 /* END OF NAVBAR */
 
 /* ENTRY AND FORMS */
-.popup {
+/*.popup {
     top: 0;
     left: 0;
     width: 100%;
@@ -257,7 +187,7 @@ nav ul > li:hover > .dropdown {
     position: fixed;
     background-color: rgba(37, 40, 43, 0.6);
     z-index: 1000;
-}
+}*/
 .form-container {
     display: block;
     z-index: 300;
@@ -356,45 +286,12 @@ nav ul > li:hover > .dropdown {
 /* END OF INDEX */
 
 /* BIJLES GEVEN */
-.blurb-container {
-    width: 1200px;
-    margin: 150px auto 50px auto;
-    box-sizing: border-box;
-}
-.blurb {
-    width: 400px;
-    display: inline-block;
-    vertical-align: top;
-    text-align: justify;
-    text-justify: inter-word;
-    padding: 0 20px 0 20px;
-    box-sizing: border-box;
-}
-.blurb h5 {
-    text-align: center;
-    font-size: 18px;
-    color: #007ee5;
-    margin: 10px 0 16px 0;
-    font-family: 'Open Sans', sans-serif;
-}
-.blurb div {
-    text-align: center;
-    height: 140px;
-    position: relative;;
-}
-.blurb div img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 120px;
-}
 .big-divider {
     color: rgb(208, 212, 217);
     width: 70%;
     margin: 0 auto;
 }
-.grid {
+.grid2 {
     margin: 50px auto 0 auto;
     width: 1200px;
     box-sizing: border-box;
@@ -406,6 +303,11 @@ nav ul > li:hover > .dropdown {
     float: left; 
     margin: 10px;   
 }
+.tile-wrapper2 {
+    height: 200px;
+    width: 200px;
+}
+
 .tile {
     width: 220px;
     height: 220px;
@@ -499,17 +401,7 @@ nav ul > li:hover > .dropdown {
 
 
 
-
-
 /* OTHERS */
-.header {
-    background-image: url('/source/images/header.jpg');
-    background-size: cover;
-    -webkit-filter: grayscale(60%);
-    filter: grayscale(60%);
-    height: 360pt;
-    width: 100%;
-}
 #caption {
     margin: 0;
     padding: 50px 0 50px 10%;

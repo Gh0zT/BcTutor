@@ -15,49 +15,74 @@ if((isset($_SESSION['user'])) && (isset($_SESSION['logged_in']))) {
 <html>
     <head>
         <title>BcTutor</title>
+
+        <!-- JQUERY -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+        <!-- SEMANTIC UI -->
+        <link rel="stylesheet" type="text/css" href="Semantic-UI-CSS/semantic.min.css">
+        <script src="Semantic-UI-CSS/semantic.min.js"></script>
+        <script src="http://semantic-ui.com/javascript/library/tablesort.js"></script>
+
+        <!-- STYLE & FONTS -->
         <link rel="stylesheet" type="text/css" href="style/style.css">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
         <meta charset="UTF-8">
 
-        <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js?ver=1.4.2'></script>
+	 <?php $page = home; ?>
+
     </head>
     <body>
-	<div class="adminview">
-	<!-- SEARCH BAR SCRIPT -->
-<script>
-function search() {
-    var input, filter, table, tr, td, i;
-    input = document.getElementById("searchbar");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("searchtable");
-    tr = table.getElementsByTagName("tr");
+	<?php include "includes/navbar.php"; ?>
+	<div class="ui vertical segment" style="padding: 90px 0 0 0;">
+	    <div class="ui grid container">
+		    <div class="four wide column">
+		    	<div class="ui vertical menu">
+			    <a class="item">Tutors</a>
+			    <a class="item">Studenten</a>
+		    	</div>
+		    </div>
+		    <div class="twelve wide column">
+		       	<table class="ui sortable celled table">
+			    <thead>
+				<tr>
+				    <th>hoi1</th>
+				    <th>hoi2</th>
+				    <th>hoi1</th>
+                                    <th>hoi2</th>
+				</tr>
+			    </thead>
+			    <tbody>
+				<tr>
+  				    <td>hoihoi</td>
+                                    <td>hoihoi</td>
+                                    <td>hoihoi</td>
+                                    <td>hoihoi</td>
+				</tr>
+			    <?php
+			    	$result = mysql_query("SELECT u.ID 'ID', u.Voornaam 'Voornaam', u.Achternaam 'Achternaam', u.Tussenvoegsel 'Tussenvoegsel', u.Klas 'Klas' FROM Users u, Tutors t WHERE u.ID = t.Tutor");	
+			    	while($row = mysql_fetch_array($result)){
+				    echo "<tr><td>" . $row['Voornaam'] . "</td><td>" . $row['Tussenvoegsel'] . "</td><td>" . $row['Achternaam'] . "</td><td>" . $row['Klas'] . "</td></tr>";
+				}
+			    ?>
+			    </tbody>
+			</table>
+			<script>
+			    $('.ui.sortable.table').tablesort();
+			</script>
+   		    </div>
+	    </div>
+	</div>
 
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-            if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
-        } 
-    }
-}
-</script>
+	<!-- <div class="adminview">
 	<div class="adminsidebar left">
 	    <div class="adminsidebar view">
 		<?php
 		if(($_GET['view'] == "students") || !(isset($_GET['view']))){ ?>
 		    <a href="dashboard.php?view=tutors">Tutors</a>
-		    <a href="dashboard.php?view=aanmeldingen">Aanmeldingen</a>
 		<?php }
 		if($_GET['view'] == "tutors"){ ?>
 		    <a href="dashboard.php?view=students">Studenten</a>
-		    <a href="dashboard.php?view=aanmeldingen">Aanmeldingen</a>
-		<?php } 
-		if($_GET['view'] == "aanmeldingen"){?>
-		    <a href="dashboard.php?view=students">Studenten</a>
-		    <a href="dashboard.php?view=tutors">Tutors</a>
 		<?php } ?>
 	    </div>
             <div></div>
@@ -65,60 +90,9 @@ function search() {
 	</div>
 	<div class="fill-space right">
 	<?php
-	// IF VIEW IS STUDENTS
 	if(($_GET['view'] == "students") || !(isset($_GET['view']))){ ?>
 	    <h3 class="left">Studenten</h3>
-	    <input type="text" id="searchbar" onkeyup="search()" placeholder="Zoeken...">
-	<div class="tablewrapper left">
-	    <?php
-		$query = "SELECT u.ID 'ID', u.Voornaam 'Voornaam', u.Achternaam 'Achternaam', u.Tussenvoegsel 'Tussenvoegsel', u.Klas 'Klas' FROM Users u, Tutors t WHERE u.ID = t.Leerling ORDER BY u.Voornaam ASC";
-	    ?>
-	    <table id='searchtable'>
-		<tr>
-		    <?php if(!isset($_GET['voornaam'])){ ?>
-		    	<th><a href="dashboard.php?view=students&voornaam=desc">Voornaam )</a></th>
-		    <?php } else if($_GET['voornaam'] == "desc"){ ?>
-			<th><a href="dashboard.php?view=students&voornaam=asc">Voornaam v</a></th>
-		    <?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.Leerling ORDER BY u.Voornaam ASC";
-		    } else { ?>
-			<th><a href="dashboard.php?view=students&voornaam=desc">Voornaam ^</a></th>
-		    <?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.Leerling ORDER BY u.Voornaam DESC"; 
-		    } ?>
-
-		    <?php if(!isset($_GET['achternaam'])){ ?>
-                        <th><a href="dashboard.php?view=students&achternaam=desc">Achternaam )</a></th>
-                    <?php } else if($_GET['achternaam'] == "desc"){ ?>
-                        <th><a href="dashboard.php?view=students&achternaam=asc">Achternaam v</a></th>
-                    <?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.Leerling ORDER BY u.Achternaam ASC";
-                    } else { ?>
-                        <th><a href="dashboard.php?view=students&achternaam=desc">Achternaam ^</a></th>
-                    <?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.Leerling ORDER BY u.Achternaam DESC";
-                    } ?>
-
-		    <?php if(!isset($_GET['klas'])){ ?>
-                        <th><a href="dashboard.php?view=students&klas=desc">Klas )</a></th>
-                    <?php } else if($_GET['klas'] == "desc"){ ?>
-                        <th><a href="dashboard.php?view=students&klas=asc">Klas v</a></th>
-                    <?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.Leerling ORDER BY u.Klas ASC";
-                    } else { ?>
-                        <th><a href="dashboard.php?view=students&klas=desc">Klas ^</a></th>
-                    <?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.Leerling ORDER BY u.Klas DESC";
-                    } ?>
-
-		</tr>	
-		<?php
-                $result = mysql_query($query);
-                while ( $row = mysql_fetch_array($result) ) {
-                    echo "<tr><td>" . $row['Voornaam'] . "</td>";
-                    echo "<td>" . $row['Tussenvoegsel'] . " " . $row['Achternaam'] . "</td>";
-                    echo "<td>" . $row['Klas'] . "</td></tr>";
-                }
-            ?>
-	    </table>
-
-	<?php
-	// IF VIEW IS TUTORS
-	} else if($_GET['view'] == "tutors"){ ?>
+	<?php } else if($_GET['view'] == "tutors"){ ?>
 	    <h3 class="left">Tutors</h3>
 	<div class="tablewrapper left">
 	    <?php
@@ -152,7 +126,7 @@ function search() {
                     <th><a href="dashboard.php?view=tutors&klas=asc">Klas v</a></th>
                 <?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.tutor ORDER BY u.Klas ASC";
                 } else { ?>
-                    <th><a href="dashboard.php?view=tutors&klas=desc">Klas ^</a></th>
+                    <th><a href="dashboard.php?klas=desc">Klas ^</a></th>
                 <?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.tutor ORDER BY u.Klas DESC";
                 } ?>
 	
@@ -171,7 +145,7 @@ function search() {
 	    echo "Geen tabel geselecteerd!";
 	} ?>
 	</div>
-	</div>
+	</div> -->
     </body>
 </html>
 
@@ -181,18 +155,28 @@ function search() {
 <html>
     <head>
         <title>BcTutor</title>
+
+        <!-- JQUERY -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+        <!-- SEMANTIC UI -->
+        <link rel="stylesheet" type="text/css" href="Semantic-UI-CSS/semantic.min.css">
+        <script src="Semantic-UI-CSS/semantic.min.js"></script>
+
+        <!-- STYLE & FONTS -->
         <link rel="stylesheet" type="text/css" href="style/style.css">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
         <meta charset="UTF-8">
 
-        <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js?ver=1.4.2'></script>
+	<?php $page = home; ?>
+
     </head>
 
     <body>
         <?php include 'includes/navbar.php'; ?>
 	
-	<div class="wrapper">
- 	    <h2>Dashboard</h2>
+	<div class="wrapper" style="padding: 90px 0 40px 0;">
+ 	    <h2 style="color: blue;">Dashboard</h2>
 	    <hr>
 	
 	    <div class="dashboard">

@@ -1,6 +1,6 @@
 <?php
 
-$file = "/var/www/dbconfig.php";
+$file = "../../dbconfig.php";
 require($file);
 
 $conn = mysql_connect($host, $username, $password) or die("Unable to connect: " . mysql_error());

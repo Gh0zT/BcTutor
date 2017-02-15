@@ -3,7 +3,7 @@
 
 <?php session_start();
 
-require '/var/www/dbconfig.php';
+require '../../dbconfig.php';
 require 'dbconnect.php';
 
 if(!($_SESSION['logged_in'] == true)) {
@@ -12,92 +12,269 @@ if(!($_SESSION['logged_in'] == true)) {
 
     <head>
         <title>BcTutor</title>
+
+	<!-- JQUERY -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+	<!-- SEMANTIC UI -->
+        <link rel="stylesheet" type="text/css" href="Semantic-UI-CSS/semantic.min.css">
+        <script src="Semantic-UI-CSS/semantic.min.js"></script>
+
+	<!-- STYLE & FONTS -->
         <link rel="stylesheet" type="text/css" href="style/style.css">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
         <meta charset="UTF-8">
 
-        <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js?ver=1.4.2'></script>
+	<?php $page = bijlesgeven; ?>
      </head>
 
     <body>
         <?php include 'includes/navbar.php'; ?>
 
-            <div class="blurb-container">
-                <div class="blurb">
-                    <div><img src="source/images/icon_aanmelden_512px.png"></div>
-                    <h5>Aanmelden</h5>
-                    <p>Ben je goed in een bepaald vak en ben je bereid om andere leerlingen bijles te geven in dat vak? Meld je dan aan door hieronder op het vak te klikken waarin je bijles wilt geven. Je moet echter wel aan de voorwaarden voldoen om bijles te geven!</p>
-                </div><!--
-                --><div class="blurb">
-                    <div><img src="source/images/icon_gesprek_512px.png"></div>
-                    <h5>Gesprek</h5>
-                    <p>Ben je aangemeld om bijles te geven? Dan wordt je uitgenodigd voor een gesprek! In dit gesprek krijg je verdere informatie en wordt gekeken of je inderdaad geschikt bent om bijles te geven.</p>
-                </div><!--
-                --><div class="blurb">
-                    <div><img src="source/images/icon_bijlesgeven_512px.png"></div>
-                    <h5>Bijles geven</h5>
-                    <p>Zodra uit het gesprek blijkt dat je aan alle voorwaarden voldoet, kun je beginnen met bijles geven! Je verdient hiermee 5 euro per uur en de school stelt een ruimte beschikbaar waar je rustig kunt zitten om bijles te geven.</p>
+    <div class="ui vertical segment" style="padding: 90px 0 40px 0;">
+	<div class="ui container">
+            <div class="ui blue three large steps">
+                <div class="step">
+                    <i class="add user icon"></i>
+		    <div class="content">
+			<div class="title">Aanmelden</div>
+                        <div class="description">Lijkt het je leuk om bijles te geven en wil je wat bijverdienen? Meld je dan hieronder aan! Check wel eerst even de <a href="#">voorwaarden</a>!
+			</div>
+		    </div>
+                </div>
+		<div class="step">
+                    <i class="talk icon"></i>
+                    <div class="content">
+                    	<div class="title">Gesprek</div>
+                        <div class="description">Nadat je je hebt aangemeld wordt je uitgenodigd voor een gesprek. Hierbij wordt gekeken of je geschikt bent om bijles te geven.
+			</div>
+		    </div>
+                </div>
+		<div class="step">
+                    <i class="student icon"></i>
+                    <div class="content">
+			<div class="title">Bijles geven</div>
+                    	<div class="description">Zodra iemand zich aanmeld om bijles te krijgen in het vak dat jij gekozen hebt kun je beginnen! Je verdient 5 euro per uur en de school stelt ruimte voor je beschikbaar!
+		    	</div>
+		    </div>	
                 </div>
             </div>
-            <hr class="big-divider">
-            <div class="grid">
+	</div>
+    </div>
+
+    <div class="ui vertical">
+            <div class="grid2" type="button">
                 <?php
                     $result = mysql_query("SELECT * FROM `Vakken` ORDER BY Vak");
-                    while($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-                        echo "<div class='tile-wrapper' onclick='createPopup(\"500px\", \"auto\", \"" . $row['Vak'] . "\")'><div class='tile' style='background-image: url(source/images/vakken/" . $row['Afbeelding'] . ");'><p><a>" . $row['Vak'] . "</a></p></div></div>";
-                    }			    
-                ?>
-            </div>
-
-            <div class="popup">
-                <div class="form-container">
-                    <h3>Bijles geven</h3>
-                    <div class="close-popup"></div>
-                    <form method="POST" action="">
-                        <p>Je bent je aan het aanmelden om bijles te geven in het vak <span class="highlight" id="hoofdvak"></span></p>
-			<select>
-                            <?php 
-				$result = mysql_query("SELECT v.Vak 'vak' FROM Vakken v");
-				while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-				    echo "<option>" . $row['vak'] . "</option>";
-				}
-			    ?>				
-                        </select>
-
-                        <!--<input type="hidden" name="Hoofdvak" value="!!!">-->
-			<!-- extra vak -->
+                    while($row = mysql_fetch_assoc($result, MYSQL_ASSOC)) { ?>
+			<div class='tile-wrapper'>
+			    <div class='tile' style='background-image: url(source/images/vakken/<?php echo $row['Afbeelding']; ?>)'>
+				<p>
+				    <a><?php echo $row['Vak']; ?></a>
+				</p>
+				<span class="id hide"><?php echo $row['ID']; ?></span>
+				<span class="afbeelding hide"><?php echo $row['Afbeelding']; ?></span>
+				<span class="vak hide"><?php echo $row['Vak']; ?></span>
+			   </div>
+			</div>
+			<?php
+                   }
+		?>
 		
-	                <input type="checkbox" name="voorwaarden">
-        	        <label for="voorwaarden">Ik heb de <a class="voorwaarden" href="#">algemene voorwaarden</a> gelezen en ga hiermee akkoord.</label>
-			                        
-			<div style="display: none;" id="hiddenvoorwaarden">Hier komen de voorwaarden!</div>	
-                        <button type="sumbit" name="submit-bijlesgeven">Opslaan</button>
-                    </form>
-                </div>
+<script>
+		//wait for page to load 
+		$(document).ready(function(){
+			
+                    $('.tile').click(function() {
+			
+			//get variables from clicked tile
+			var id = $(this).children('span.id').html();
+			var afbeelding = $(this).children('span.afbeelding').html();
+			var vak = $(this).children('span.vak').html();
 
-                <script>
-		//popup script
-                function createPopup(width, height, vak) {
-                    $(".popup").fadeIn(500);
-                    $(".popup").css("display", "flex");
-                    $(".form-container").css("width", width);
-                    $(".form-container").css("height", height);
-                    document.getElementById("hoofdvak").innerHTML = vak;
-                };
+			//set variables in the modal
+			$('span.addvak').html(vak);
+			var src = "/source/images/vakken/" + afbeelding;
+			$('img.addafbeelding').attr("src", src);
+			$('.addid').attr("value", id); 
+			
+			//simple ajax call
+			/*$.post('bier.php', { 'id2' : id },
+			  function(returnedData){
+			    console.log(returnedData);
+			  }
+			);*/
 
-                $('html').click(function (e) {
-                    if ( $(e.target).hasClass("popup") ) {
-                        $(".popup").fadeOut(500);
-                    }
+			//variables are set, now open modal
+                        $('#modalbijlesgeven')
+                          .modal({
+			    allowMultiple: true,
+                            onDeny : function(){
+			      $("#modalconfirm")
+			      .modal({
+                                allowMultiple: true,
+                                onDeny : function(){},
+                                onApprove : function (){
+                                  $("#modalbijlesgeven").modal('hide');
+                                }
+                              })
+                              .modal('setting', 'closable', false)
+                              .modal('setting', 'transition', 'scale')
+                              .modal('show');
+                              return false;
+
+                            },
+                            onApprove : function(){
+			      return false;
+                            }
+                          })
+			.modal('setting', 'closable', false)
+                        .modal('setting', 'transition', 'scale')
+                        .modal('show');
+
+                    });
+		    
+                    $('.dropdown')
+                        .dropdown({
+                            maxSelections: 5,
+                            forceSelection: false
+                        })
+                    ;
                 });
+</script>
+		<div class="ui small modal" id="modalconfirm">
+		    <div class="header">Aanmelding voor bijles geven annuleren</div>
+		    <div class="content">
+			<p>Weet je zeker dat je je aanmelding wil annuleren?</p>
+		    </div>
+		    <div class="actions">
+                          <div class="ui red cancel hide labeled icon button" name="annuleren" id="annuleren">
+                              Niet annuleren
+                              <i class="remove icon"></i>
+                          </div>
+                          <div class="ui green positive right labeled icon button" name="submit-bijlesgeven" id="submit-bijlesgeven">
+                              Annuleer
+                              <i class="checkmark icon"></i>
+                          </div>
+                      </div>
+		</div>
 
-                $('.close-popup').click(function() {
-                    $(".popup").fadeOut(500);
-                });
-		</script> 
+		<div class="ui modal" id="modalbijlesgeven">
+                    <div class="header">Aanmelden om bijles te geven in <span class="addvak"></span></div>
+                        <div class="image content">
+                            <div class="ui large image">
+                                <img class="addafbeelding" src="">
+                            </div>
+                            <div class="description" style="width: 100%;">
+                                <div class="container">
+				    <div class="container fadecontainer invisible">
+					<div class="ui active inverted dimmer" style="border-radius: 8px;">
+    					    <div class="ui text loader">Bedankt voor je aanmelding! Je wordt doorverwezen naar het dashboard.</div>
+  					</div>
+				    </div>
+                                    <form class="ui form" id="aanmeldingBijlesGeven" method="POST">
+                                        <div class="field">
+					    <input class="addid" type="hidden" name="hoofdvak" value="">
+                                            <input type="text" style="position: fixed; left: -10000000px;" disabled/>
+                                            <label class="fluid">Selecteer hier eventueel een extra vak</label>
+                                            <select multiple="" class="ui fluid search dropdown" name="extravakken[]" data-validate="extravakken">  
+                                                <option value="">Geen</option>
+                                                <?php
+                                                    $result2 = mysql_query("SELECT v.Vak 'vak', v.ID 'ID' FROM Vakken v ORDER BY v.Vak");
+                                                    while ($row2 = mysql_fetch_array($result2, MYSQL_ASSOC)) {
+                                                        echo "<option value=\"" . $row2['ID'] . "\">" . $row2['vak'] . "</option>";
+                                                    }
+                                                ?>
+                                            </select>
+					</div>
+                                            <div class="ui message">
+                                                <div class="header">
+                                                    Vereisten om bijles te geven
+                                                </div>
+                                                <ul class="list">
+                                                    <li>Je moet minimaal een 7 gemiddeld staan voor het vak waarin je bijles wilt geven. Je moet vorig jaar ook met dit gemiddelde hebben afgesloten.</li>
+                                                    <li>Je moet geduldig zijn en goed kunnen uitleggen.</li>
+                                                    <li>Je moet je goed kunnen inleven in de problemen van de leerling met betrekking tot dat vak.</li>
+                                                    <li>Je moet gedurende deze periode ook op "overgaan" blijven staan.</li>
+                                                </ul>
+                                            </div>
+					    <div class="field">
+                                                <div class="ui checkbox">
+                                                    <input type="checkbox" name="terms">
+                                                    <label>Ik voldoe aan deze eisen</label>
+                                                </div>
+					   </div>
+				       <div class="ui error message"></div>    
+                                   </form>
+<script>
+$('#aanmeldingBijlesGeven')
+  .form({
+    fields: {
+      extravakken: {
+        identifier: 'extravakken',
+	optional: true,
+        rules: [
+          {
+            type     : 'empty',
+	    prompt   : 'Error, neem contact op met de makers'  
+          }
+        ]
+      },  
+      terms: {
+        identifier: 'terms',
+        rules: [
+          {
+            type   : 'checked',
+            prompt : 'Je moet voldoen aan de gestelde eisen'
+          }
+        ]
+      }
+    },
+    onSuccess : function(){
+     var form = $('#aanmeldingBijlesGeven');
+
+      $.ajax({
+        type: "POST",
+        url: 'ajaxHandlerGeven.php',
+        data: form.serialize(),
+        success: function( response ) {
+      	  console.log(response);
+        }
+      });
+
+      $('#aanmeldingBijlesGeven').addClass('invisible');
+      $('.fadecontainer').removeClass('invisible');
+      setTimeout("window.location.href = 'index.php';", 2000);
+    }
+  })
+;
+</script>
+                               </div>
+                          </div>
+                      </div>
+                      <div class="actions">
+                          <div class="ui red cancel hide labeled icon button">
+                              Annuleren
+                              <i class="remove icon"></i>
+                          </div>
+                          <button name="postBijlesGeven" id="submit-formding" form="aanmeldingBijlesGeven" value="Submit" class="ui green ok right labeled icon button" type="submit">
+                              Opslaan
+                              <i class="checkmark icon"></i>
+                          </button>
+                      </div>
+                  </div>
+		</div>
             </div>
-
+	</div>
     </body>
-
+<script>
+$('#submit-formding').click(function() {
+    $('#aanmeldingBijlesGeven').submit();
+});
+$('#aanmeldingBijlesGeven').submit(function(e){ 
+    //e.preventDefault(); usually use this, but below works best here.
+    return false;
+});
+</script>
 </html>
 <?php } ?>
