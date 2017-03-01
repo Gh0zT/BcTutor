@@ -34,38 +34,49 @@ if((isset($_SESSION['user'])) && (isset($_SESSION['logged_in']))) {
     </head>
     <body>
 	<?php include "includes/navbar.php"; ?>
+
+	<?php if($_GET['view'] == "tutors"){ ?>
 	<div class="ui vertical segment" style="padding: 90px 0 0 0;">
 	    <div class="ui grid container">
 		    <div class="four wide column">
 		    	<div class="ui vertical menu">
-			    <a class="item">Tutors</a>
-			    <a class="item">Studenten</a>
+			    <a class="active item" href="dashboard.php?view=tutors">Tutors</a>
+			    <a class="item" href="dashboard.php?view=students">Studenten</a>
+			    <a class="item" href="dashboard.php?view=aanmeldingen">Aanmeldingen</a>
 		    	</div>
 		    </div>
 		    <div class="twelve wide column">
-		       	<table class="ui sortable celled table">
+		       	<table class="ui sortable celled blue table">
 			    <thead>
 				<tr>
-				    <th>hoi1</th>
-				    <th>hoi2</th>
-				    <th>hoi1</th>
-                                    <th>hoi2</th>
+				    <th></th>
+				    <th>Voornaam</th>
+				    <th>Tussenvoegsel</th>
+				    <th>Achternaam</th>
+                                    <th>Klas</th>
+				    <th class="collapsing">Koppelen</th>
 				</tr>
 			    </thead>
 			    <tbody>
-				<tr>
-  				    <td>hoihoi</td>
-                                    <td>hoihoi</td>
-                                    <td>hoihoi</td>
-                                    <td>hoihoi</td>
-				</tr>
 			    <?php
-			    	$result = mysql_query("SELECT u.ID 'ID', u.Voornaam 'Voornaam', u.Achternaam 'Achternaam', u.Tussenvoegsel 'Tussenvoegsel', u.Klas 'Klas' FROM Users u, Tutors t WHERE u.ID = t.Tutor");	
+				$result = mysql_query("SELECT u.Voornaam 'Voornaam', u.Achternaam 'Achternaam', u.Tussenvoegsel 'Tussenvoegsel', u.Klas 'Klas' FROM Users u, Tutors t WHERE u.ID = t.Tutor");
 			    	while($row = mysql_fetch_array($result)){
-				    echo "<tr><td>" . $row['Voornaam'] . "</td><td>" . $row['Tussenvoegsel'] . "</td><td>" . $row['Achternaam'] . "</td><td>" . $row['Klas'] . "</td></tr>";
+				    echo "<tr>
+				        <td class='collapsing'>
+        				    <div class='ui fitted checkbox'>
+          					<input type='checkbox'> <label></label>
+        				    </div>
+      					    </td><td>" . $row['Voornaam'] . "</td><td>" . $row['Tussenvoegsel'] . "</td><td>" . $row['Achternaam'] . "</td><td>" . $row['Klas'] . "</td><td></td></tr>";
 				}
 			    ?>
 			    </tbody>
+			    <tfoot>
+				<th colspan="6">
+				    <div class="ui right floated small primary labeled icon button">
+          				<i class="user icon"></i> Add User
+        			    </div>
+				</th>
+			    </tfoot>
 			</table>
 			<script>
 			    $('.ui.sortable.table').tablesort();
@@ -73,79 +84,106 @@ if((isset($_SESSION['user'])) && (isset($_SESSION['logged_in']))) {
    		    </div>
 	    </div>
 	</div>
+	<?php } elseif ($_GET['view'] == "students"){ ?>
 
-	<!-- <div class="adminview">
-	<div class="adminsidebar left">
-	    <div class="adminsidebar view">
-		<?php
-		if(($_GET['view'] == "students") || !(isset($_GET['view']))){ ?>
-		    <a href="dashboard.php?view=tutors">Tutors</a>
-		<?php }
-		if($_GET['view'] == "tutors"){ ?>
-		    <a href="dashboard.php?view=students">Studenten</a>
-		<?php } ?>
-	    </div>
-            <div></div>
-            <div></div>
-	</div>
-	<div class="fill-space right">
-	<?php
-	if(($_GET['view'] == "students") || !(isset($_GET['view']))){ ?>
-	    <h3 class="left">Studenten</h3>
-	<?php } else if($_GET['view'] == "tutors"){ ?>
-	    <h3 class="left">Tutors</h3>
-	<div class="tablewrapper left">
-	    <?php
-		$query = "SELECT u.ID 'ID', u.Voornaam 'Voornaam', u.Achternaam 'Achternaam', u.Tussenvoegsel 'Tussenvoegsel', u.Klas 'Klas' FROM Users u, Tutors t WHERE u.ID = t.Tutor ORDER BY u.Voornaam ASC";
-	    ?>
-	    <table>
-	    <tr>
-		<?php if(!isset($_GET['voornaam'])){ ?>
-		    <th><a href="dashboard.php?view=tutors&voornaam=desc">Voornaam )</a></th>
-		<?php } else if($_GET['voornaam'] == "desc"){ ?>
-		    <th><a href="dashboard.php?view=tutors&voornaam=asc">Voornaam v</a></th>
-		<?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.tutor ORDER BY u.Voornaam ASC";
-		} else { ?>
-		    <th><a href="dashboard.php?view=tutors&voornaam=desc">Voornaam ^</a></th>
-		<?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.tutor ORDER BY u.Voornaam DESC";
-		} ?>
-	
-		<?php if(!isset($_GET['achternaam'])){ ?>
-                    <th><a href="dashboard.php?view=tutors&achternaam=desc">Achternaam )</a></th>
-                <?php } else if($_GET['achternaam'] == "desc"){ ?>
-                    <th><a href="dashboard.php?view=tutors&achternaam=asc">Achternaam v</a></th>
-                <?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.tutor ORDER BY u.Achternaam ASC";
-                } else { ?>
-                    <th><a href="dashboard.php?view=tutors&achternaam=desc">Achternaam ^</a></th>
-                <?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.tutor ORDER BY u.Achternaam DESC";
-                } ?>
-		
-		<?php if(!isset($_GET['klas'])){ ?>
-                    <th><a href="dashboard.php?view=tutors&klas=desc">Klas )</a></th>
-                <?php } else if($_GET['klas'] == "desc"){ ?>
-                    <th><a href="dashboard.php?view=tutors&klas=asc">Klas v</a></th>
-                <?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.tutor ORDER BY u.Klas ASC";
-                } else { ?>
-                    <th><a href="dashboard.php?klas=desc">Klas ^</a></th>
-                <?php $query = "SELECT * FROM Users u, Tutors t WHERE u.ID = t.tutor ORDER BY u.Klas DESC";
-                } ?>
-	
-	    </tr>
-	    <?php
-		$result = mysql_query($query);
-		while ( $row = mysql_fetch_array($result) ) {
-		    echo "<tr><td>" . $row['Voornaam'] . "</td>";
-		    echo "<td>" . $row['Tussenvoegsel'] . " " . $row['Achternaam'] . "</td>";	
-		    echo "<td>" . $row['Klas'] . "</td></tr>";
-		}
-	    ?>
-	    </table>
-	</div>
-	<?php } else {
-	    echo "Geen tabel geselecteerd!";
-	} ?>
-	</div>
-	</div> -->
+	<?php } elseif ($_GET['view'] == "aanmeldingen" || $view == ""){ ?>
+	    <div class="ui vertical segment" style="padding: 90px 0 0 0;">
+                <div class="ui grid container">
+                    <div class="four wide column">
+                        <div class="ui vertical menu">
+                            <a class="item" href="dashboard.php?view=tutors">Tutors</a>
+                            <a class="item" href="dashboard.php?view=students">Studenten</a>
+                            <a class="active item" href="dashboard.php?view=aanmeldingen">Aanmeldingen</a>
+                        </div>
+                    </div>
+		    <div class="twelve wide column">
+                        <table class="ui sortable celled selectable blue table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Voornaam</th>
+                                    <th>Tussenvoegsel</th>
+                                    <th>Achternaam</th>
+                                    <th>Klas</th>
+				    <th>Vak/Vakken</th>
+				    <th>Datum</th>
+				    <th>Keuze</th>
+                                </tr>
+                            </thead>
+			    <tbody>
+				<style>
+				td {
+				    white-space: nowrap;
+				    overflow: hidden;
+				}
+				</style>
+                            <?php
+                                $result = mysql_query(" SELECT Users.Voornaam, Users.Tussenvoegsel, Users.Achternaam, Users.Klas, GROUP_CONCAT(Vakken.Afkorting SEPARATOR ','), Tutoraanmeldingen.Datum, Tutoraanmeldingen.Keuze, Users.ID
+							FROM Tutoraanmeldingen
+							JOIN Vakken ON Tutoraanmeldingen.Vak=Vakken.ID
+							JOIN Users ON Tutoraanmeldingen.ID=Users.ID
+							GROUP BY Tutoraanmeldingen.ID
+							UNION ALL
+							SELECT Users.Voornaam, Users.Tussenvoegsel, Users.Achternaam, Users.Klas, GROUP_CONCAT(Vakken.Afkorting SEPARATOR ','), Leerlingaanmeldingen.Datum, Leerlingaanmeldingen.Keuze, Users.ID
+                                                        FROM Leerlingaanmeldingen
+                                                        JOIN Vakken ON Leerlingaanmeldingen.Vak=Vakken.ID
+                                                        JOIN Users ON Leerlingaanmeldingen.ID=Users.ID
+							GROUP BY Leerlingaanmeldingen.ID
+							 ");
+
+				while ($row = mysql_fetch_array($result, MYSQL_ASSOC)){
+				    $vakkenlijst = explode(",", $row['GROUP_CONCAT(Vakken.Afkorting SEPARATOR \',\')']);
+                                    echo "<tr>
+                                        <td class='collapsing'>
+                                            <div class='ui fitted checkbox'>
+                                                <input type='checkbox' class='ajax-checkbox' name='checkbox[]' value='" . $row['ID'] . "'><label></label>
+                                            </div>
+                                        </td>
+					<td>" . $row['Voornaam'] . "</td>
+					<td>" . $row['Tussenvoegsel'] . "</td>
+					<td>" . $row['Achternaam'] . "</td>
+					<td>" . $row['Klas'] . "</td>
+					<td>";
+					foreach($vakkenlijst as $vak){
+					    echo "<div class='ui blue horizontal label'>" . $vak . "</div>";
+					}
+					echo "</td><td>" . $row['Datum'] . "</td>
+					<td>" . $row['Keuze'] . "</td>
+				    </tr>";
+                                }
+			    ?>
+                            </tbody>
+                            <tfoot>
+				<th colspan="8">
+				    <div id="approve-users" class="ui small labeled icon button" type="button" name="approve-users">
+					<i class="add user icon"></i>Aanmeldingen accepteren
+				    </div>
+                                    <div id="deny-users" class="ui small labeled icon button" type="button" name="deny-users">
+                                        <i class="remove user icon"></i>Aanmeldingen annuleren
+                                    </div>
+                                </th>
+                            </tfoot>
+                        </table>
+                        <script>
+			$( document ).ready(function() {
+    			    $('#approve-users').click(function(){
+				$.ajax({
+			            type: "POST",
+      				    url: 'ajaxHandlerDashboard.php',
+        			    data: $('.ajax-checkbox:checked').serialize(),
+        			    success: function( response ) {
+          				console.log(response);
+         			    }
+      				});
+			    });
+			});
+                        $('.ui.sortable.table').tablesort();
+                        </script>
+                    </div>
+            </div>
+        </div>
+	<?php } ?>
+
     </body>
 </html>
 
@@ -179,7 +217,63 @@ if((isset($_SESSION['user'])) && (isset($_SESSION['logged_in']))) {
  	    <h2 style="color: blue;">Dashboard</h2>
 	    <hr>
 	
-	    <div class="dashboard">
+	<?php
+	    $ID = $_SESSION['ID'];
+	    $sql = "SELECT * FROM `Users` WHERE ID='$ID'";
+	    $result = mysql_query($sql);
+	    $row = mysql_fetch_array($result);
+
+	    
+
+	    echo "Welkom op BcTutor " . $row['Voornaam'] . " " . $row['Tussenvoegsel'] . " " . $row['Achternaam'];
+	?>
+	<br/>
+	<?php
+	    echo "Je zit nu in " . $row['Niveau'] . " " . $row['Leerjaar'];
+	?>
+	<br/><br/>
+
+	<?php
+	 	$result2 = mysql_query(" SELECT ID, Vak, Datum FROM Tutoraanmeldingen AS ta WHERE ID = '$ID'
+					 UNION ALL
+					 SELECT ID, Vak, Datum FROM Tutors AS t WHERE ID = '$ID'
+					 UNION ALL
+					 SELECT ID, Vak, Datum FROM Leerlingaanmeldingen AS la WHERE ID = '$ID'
+                                         UNION ALL
+					 SELECT ID, Vak, Datum FROM Leerlingen AS l WHERE ID = '$ID' ");
+
+	    $num_rows = mysql_num_rows($result2); 
+	    echo $num_rows . "<br>";
+		if($num_rows > 0){
+		    while ($row3 = mysql_fetch_array($result2, MYSQL_ASSOC)){
+			echo $row3['ID'] . "; " . $row3['Vak'] . "; " . $row3['Datum'] . "<br>";	
+		    }
+		}		
+            	if ($num_rows == 0) {
+                    echo "U staat nog nergens voor ingeschreven";
+            	}
+                else {
+                    echo "U staat reeds ingeschreven";
+                }
+	?>
+	<br /><br />
+	<?php
+	    echo "In het vak: " . $row2['Vak']; 
+	    echo "<br/ >Op de datum: " . $row2['Datum'];
+	?>
+	<br /><br />
+
+
+
+
+
+
+
+
+
+
+
+<!--	    <div class="dashboard">
 		<div class="bijlesgeven">
 		    <div style="width: 40px; height: 40px; background-color: red;"></div>
 			<h6>Tutor</h6>
@@ -242,7 +336,7 @@ if((isset($_SESSION['user'])) && (isset($_SESSION['logged_in']))) {
 			?>
 		    </p>	
 		</div>
-	    </div>
+	    </div> -->
 
                 <div>
                 Instellingen! <?php echo 'Welkom ' . $_SESSION['user'] . ' !'; ?>
@@ -257,10 +351,6 @@ if((isset($_SESSION['user'])) && (isset($_SESSION['logged_in']))) {
                   <input type="password" name="changepassword" placeholder="Verander Wachtwoord">
                   <button type="sumbit" name="submit-settings-password">Aanpassen</button>
                   </form>
-                  <form style="width: 300px;" class="login-form" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                  <input type="email" name="changeemail" placeholder="Verander E-mail">
-                  <button type="sumbit" name="submit-settings-email">Aanpassen</button>
-                  </form>
 
                 </div>
 	</div>
@@ -273,7 +363,6 @@ require 'dbconnect.php';
 
 $changeusername = $_POST['changeusername'];
 $changepassword = $_POST['changepassword'];
-$changeemail = $_POST['changeemail'];
 $ID = $_SESSION['ID'];
 
 
@@ -331,32 +420,6 @@ if(isset($_POST['submit-settings-password'])) {
                 echo"U moet ingelogd zijn om aanpassingen te maken!";
         }
 }
-if(isset($_POST['submit-settings-email'])) {
-
-        if($_SESSION['user'] == true) {
-                if($changeemail !== '') {
-
-                        $query = mysql_query("SELECT * FROM `Users` WHERE Email='$changeemail'") or die(mysql_error());
-                        $count = mysql_num_rows($query);
-
-                        if($count==0) {
-
-                                $result = mysql_query("UPDATE `Users` SET Email='$changeemail' WHERE ID='$ID'");
-                                echo"Aanpassingen gemaakt!";
-                        }
-                        else {
-                                echo"Dit e-mailadres is al in gebruik!";
-                        }
-                }
-                else {
-                        echo"Vul alstublieft een geldige waarde in!";
-                }
-        }
-        else {
-                echo"U moet ingelogd zijn om aanpassingen te maken!";
-        }
-}
-
 
 ?>
 

@@ -2,6 +2,8 @@
 
 <!DOCTYPE html>
 
+<?php
+
 require '../../dbconfig.php';
 require 'dbconnect.php';
 
@@ -75,16 +77,10 @@ if(!(isset($_SESSION['user'])) && !(isset($_SESSION['logged_in']))) { ?>
                             		<label>Wachtwoord</label>
                             		<input type="password" name="mypassword" placeholder="Wachtwoord">
                         	   </div>
-				   <div class="field">
-    			    		<div class="ui checkbox">
-      					    <input tabindex="0" type="checkbox" name="remember">
-      					    <label>Mijn gegevens onthouden</label>
-    			    	   	</div>
-  				   </div>
 				   <div class="ui error message"></div>
-				   <button class="ui button blue" name="submit-login" type="Inloggen">Inloggen</button>
+				   <button class="ui button blue" name="submit-login" type="submit">Inloggen</button>
 				   </form>
-                        	<p>Nog geen BcTutot account?</p>
+                        	<p>Nog geen BcTutor account?</p>
 
 				   <div class="registerform">
                         		<p>
@@ -175,10 +171,10 @@ if(!(isset($_SESSION['user'])) && !(isset($_SESSION['logged_in']))) { ?>
                      			   </div>
 					</div>
 				   </div>
-
-                        	<p>Wachtwoord vergeten?</p>
-                        	<p><a href="">Wachtwoordherstel</a></p>
-				</form>
+				   <div>
+                        		<p>Wachtwoord vergeten?</p>
+                        		<p><a href="">Wachtwoordherstel</a></p>
+				   </div>
             		      </div>
                 	</div>
 	    	</div>
@@ -213,10 +209,6 @@ $('#registerForm')
       Gebruikersnaam: {
         identifier: 'Gebruikersnaam',
         rules: [{
-          type   : 'empty',
-          prompt : 'Vul alstublieft een gebruikersnaam in.'
-	},
-	{
 	  type   : 'minLength[3]',
           prompt : 'Uw gebruikersnaam moet minimaal drie karakters lang zijn.'
 	}]
@@ -224,10 +216,6 @@ $('#registerForm')
       Wachtwoord: {
         identifier: 'Wachtwoord',
         rules: [{
-          type   : 'empty',
-          prompt : 'Vul alstublieft een wachtwoord in.'
-        },
-        {
           type   : 'minLength[6]',
           prompt : 'Uw wachtwoord moet minimaal zes karakters lang zijn.'
         }]
@@ -263,9 +251,9 @@ $('#registerForm')
       Klas: {
         identifier: 'Klas',
         rules: [{
-          type   : 'empty',
-          prompt : 'Vul alstublieft een klas in.'
-        }]
+	  type	 : 'minLength[3]',
+	  prompt : 'Vul alstublieft uw hele klas in hoofdletters in.'
+	}]
       }
     }
   })
@@ -283,10 +271,10 @@ $('#registerForm')
                               Niet annuleren
                               <i class="remove icon"></i>
                           </div>
-                          <div class="ui green positive right labeled icon button">
+                          <button class="ui green positive right labeled icon button" id="resetform" form="registerForm" type="reset">
                               Annuleer
                               <i class="checkmark icon"></i>
-                          </div>
+                          </button>
                       </div>
                 </div>
 
@@ -332,7 +320,7 @@ $('#registerForm')
 
             </script>
             <script>
-               $('.ui.fluid.dropdown').dropdown();
+                $('.ui.fluid.dropdown').dropdown();
             </script>
 
 
@@ -358,7 +346,8 @@ function NewUser() {
 $query = "INSERT INTO `Users` (Voornaam,Tussenvoegsel,Achternaam,Geboortedatum,Gebruikersnaam,Wachtwoord,Email,Niveau,Leerjaar,Klas) VALUES ('$_POST[Voornaam]', '$_POST[Tussenvoegsel]', '$_POST[Achternaam]', '$_POST[Geboortedatum]', '$_POST[Gebruikersnaam]', '$_POST[Wachtwoord]', '$_POST[Email]', '$_POST[niveau]', '$_POST[leerjaar]', '$_POST[Klas]')";
 
  $sql = mysql_query($query);
-
+$query2 = "UPDATE `Users` SET Klas = UPPER(Klas)";
+$result2 = mysql_query($query2);
 }
 
 function SignUp() {
@@ -388,6 +377,5 @@ if(isset($_POST['postRegister'])) {
 $('#submit-registration').click(function() {
     $('#registerForm').submit();
 });
-
 </script>
 

@@ -12,34 +12,34 @@ require 'dbconnect.php';
                     $vakken = $extravakken;
                 }
                 $userid = $_SESSION['ID']; //string
+                $date = date('Y-m-d H:i:s');
+
+                $result = mysql_query("SELECT Leerlingaanmeldingen.Vak AS laVak
+                                       FROM Leerlingaanmeldingen
+                                       WHERE Leerlingaanmeldingen.ID='$userid'
+                                       UNION ALL
+                                       SELECT Leerlingen.Vak AS lVak
+                                       FROM Leerlingen
+                                       WHERE Leerlingen.ID='$userid' ");
 
                 if(isset($_POST['extravakken'])){
-                $sql = "SELECT v.Leerlingaanmeldingen 'Leerlingaanmeldingen', v.ID 'ID' FROM Vakken v WHERE v.ID IN (" . implode(',',$vakken) . ")";
+                    while($row = mysql_fetch_array($result, MYSQL_ASSOC)){
+                        foreach($vakken as $key => $vak){
+                            if(($row['lVak'] == $vak) || ($row['laVak'] == $vak)){
+                                unset($vakken[$key]);
+                            }
+                        }
+                    }
+                    foreach($vakken as $vak) {
+                        mysql_query("INSERT INTO Leerlingaanmeldingen (ID, Vak, Datum, Keuze) VALUES ('$userid', '$vak', '$date', 'Leerling')");
+                    }
                 } else {
-                $sql = "SELECT v.Leerlingaanmeldingen 'Leerlingaanmeldingen', v.ID 'ID' FROM Vakken v WHERE v.ID='$hoofdvak'";
-                }
-                $result = mysql_query($sql);
-                while($row = mysql_fetch_array($result, MYSQL_ASSOC)){
-                        $matchFound = false;
-                        $ids = explode(',',$row['Leerlingaanmeldingen']);
-
-                        foreach($ids as $id){
-                                if($id == $userid){
-                                        $matchFound = true;
-                                }
+                    while($row = mysql_fetch_array($result, MYSQL_ASSOC)){
+                        if(($row['lVak'] == $vakken) || ($row['laVak'] == $vakken)){
+                            break 3;
                         }
-
-                        if($matchFound == false){
-                                $updatedCell = '';
-                                if(!empty($row['Leerlingaanmeldingen'])){
-                                    $updatedCell = $row['Leerlingaanmeldingen'] .  "," . $userid;
-                                }else{
-                                    $updatedCell = $userid;
-                                }
-                                $sql2 = "UPDATE Vakken v SET v.Leerlingaanmeldingen='$updatedCell' WHERE v.ID='" . $row['ID'] . "'";
-                                $result2 = mysql_query($sql2);
-                        }
+                  }  
+                    mysql_query("INSERT INTO Leerlingaanmeldingen (ID, Vak, Datum, Keuze) VALUES ('$userid', '$hoofdvak', '$date', 'Leerling')");
                 }
-
 ?>
 

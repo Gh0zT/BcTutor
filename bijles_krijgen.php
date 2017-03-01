@@ -44,18 +44,18 @@ if(!($_SESSION['logged_in'] == true)) {
                     </div>
                 </div>
                 <div class="step">
-                    <i class="add user icon"></i>
+                    <i class="users icon"></i>
                     <div class="content">
-                        <div class="title">?</div>
-                        <div class="description">Zodra je je aangemeld hebt voor het desbetreffende vak, wordt er gekeken naar welke behoeften je hebt en welk persoon hier het beste aan gekoppeld kan worden. Op basis van jouw gegevens gaan we een tutor zoeken die goed bij jou past.
+                        <div class="title">Afwachten</div>
+                        <div class="description">Zodra je je aangemeld hebt voor het desbetreffende vak, wordt er gekeken naar welke behoeften je hebt en welke persoon hier het beste aan gekoppeld kan worden. Op basis van jouw gegevens gaan we een tutor zoeken die goed bij jou past.
                         </div>
                     </div>
                 </div>
                 <div class="step">
-                    <i class="add user icon"></i>
+                    <i class="write icon"></i>
                     <div class="content">
-                        <div class="title">?</div>
-                        <div class="description">Zodra er een tutor beschikbaar is die we aan jou kunnen koppelen, kan je direct aan de slag. Je betaald wel een bedrag van 5 euro per uur, maar dat zal uiteindelijk moeten gaan lonen.
+                        <div class="title">Bijles krijgen</div>
+                        <div class="description">Zodra er een tutor beschikbaar is die we aan jou kunnen koppelen, kan je direct aan de slag. Je betaaldt wel een bedrag van 5 euro per uur, maar dat zal uiteindelijk moeten gaan lonen.
                         </div>
                     </div>
                 </div>
@@ -269,9 +269,12 @@ $('#aanmeldingBijlesKrijgen')
 <script>
 $('#submit-formding').click(function() {
     $('#aanmeldingBijlesKrijgen').submit();
+	e.preventDefault();
+	e.stopImmediatePropagation();
 });
 $('#aanmeldingBijlesKrijgen').submit(function(e){
-    //e.preventDefault(); usually use this, but below works best here.
+    e.preventDefault();
+    e.stopImmediatePropagation();
     return false;
 });
 </script>

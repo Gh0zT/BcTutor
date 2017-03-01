@@ -38,7 +38,7 @@ if(!($_SESSION['logged_in'] == true)) {
                     <i class="add user icon"></i>
 		    <div class="content">
 			<div class="title">Aanmelden</div>
-                        <div class="description">Lijkt het je leuk om bijles te geven en wil je wat bijverdienen? Meld je dan hieronder aan! Check wel eerst even de <a href="#">voorwaarden</a>!
+                        <div class="description">Lijkt het je leuk om bijles te geven en wil je wat bijverdienen? Meld je dan hieronder aan! Check wel eerst even de vereisten!
 			</div>
 		    </div>
                 </div>
@@ -46,7 +46,7 @@ if(!($_SESSION['logged_in'] == true)) {
                     <i class="talk icon"></i>
                     <div class="content">
                     	<div class="title">Gesprek</div>
-                        <div class="description">Nadat je je hebt aangemeld wordt je uitgenodigd voor een gesprek. Hierbij wordt gekeken of je geschikt bent om bijles te geven.
+                        <div class="description">Nadat je je hebt aangemeld word je uitgenodigd voor een gesprek. Hierbij wordt gekeken of je geschikt bent om bijles te geven.
 			</div>
 		    </div>
                 </div>
@@ -54,7 +54,7 @@ if(!($_SESSION['logged_in'] == true)) {
                     <i class="student icon"></i>
                     <div class="content">
 			<div class="title">Bijles geven</div>
-                    	<div class="description">Zodra iemand zich aanmeld om bijles te krijgen in het vak dat jij gekozen hebt kun je beginnen! Je verdient 5 euro per uur en de school stelt ruimte voor je beschikbaar!
+                    	<div class="description">Zodra iemand zich aanmeldt om bijles te krijgen in het vak dat jij gekozen hebt, kan je beginnen! Je verdient 5 euro per uur en de school stelt een ruimte voor je beschikbaar!
 		    	</div>
 		    </div>	
                 </div>
@@ -230,8 +230,8 @@ $('#aanmeldingBijlesGeven')
         ]
       }
     },
-    onSuccess : function(){
-     var form = $('#aanmeldingBijlesGeven');
+    onSuccess : function(e){
+      var form = $('#aanmeldingBijlesGeven');
 
       $.ajax({
         type: "POST",
@@ -269,10 +269,14 @@ $('#aanmeldingBijlesGeven')
     </body>
 <script>
 $('#submit-formding').click(function() {
-    $('#aanmeldingBijlesGeven').submit();
+    $('#aanmeldingBijlesGeven').submit(function(e){
+	e.preventDefault();
+	e.stopImmediatePropagation();
+    });
 });
 $('#aanmeldingBijlesGeven').submit(function(e){ 
-    //e.preventDefault(); usually use this, but below works best here.
+    e.preventDefault();
+    e.stopImmediatePropagation();
     return false;
 });
 </script>

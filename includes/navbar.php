@@ -72,7 +72,7 @@
 			<i class="dropdown icon"></i>
 		    </a>
 		<div class="ui popup loginform">
-		    <form class="ui blue form">
+		    <form class="ui blue form" method="POST" action="login.php">
 		        <h4 class="ui dividing header">Log in</h4>
 			<div class="field text-left">
 			    <label>Gebruikersnaam</label>
@@ -83,10 +83,10 @@
 			    <input type="password" name="mypassword" placeholder="Wachtwoord">
 			</div>
 			<div class="field">
-			    <div class="ui fluid blue submit button">Log in</div>
+			    <button class="ui fluid blue submit button" type="submit" name="submit-login">Log in</button>
 			</div>
 			<div class="field">
-			    <p>Nog geen account? <a href="#">Registreren</a></p> 	
+			    <p>Nog geen account? <a class='openRegister'>Registreren</a></p> 	
 			</div>
 		    </form>
 		</div>
@@ -122,4 +122,3 @@ $('.item2')
   })
 ;
 </script>
-
