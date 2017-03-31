@@ -45,7 +45,7 @@
 <!-- Mobile Sidebar .pusher -->
 <div class="pusher">
     <!-- Computer Only -->
-    <div class="ui segment computer-only" style="background-color: transparent;">
+    <div class="ui segment" style="background-color: transparent;">
         <div class="navbar ui large top fixed blue secondary pointing menu">
 	    <div class="ui container">
     	        <h3 class="ui header item">BcTutor</h3>
@@ -61,7 +61,6 @@
 		    <i class="dropdown icon"></i>
 		</a>
                 <div class="ui popup">
-                    <div class="item">Status</div>
                     <div class="item"><a href="logout.php">Uitloggen</a></div>
                 </div>
 

@@ -1,10 +1,10 @@
+
 <?php session_start(); ?>
 
 <!DOCTYPE html>
 
 <?php
 
-require '../../dbconfig.php';
 require 'dbconnect.php';
 
 if(!(isset($_SESSION['user'])) && !(isset($_SESSION['logged_in']))) { ?>
@@ -25,11 +25,12 @@ if(!(isset($_SESSION['user'])) && !(isset($_SESSION['logged_in']))) { ?>
 	<style>
 .jumbotron {
     top: 0px;
-    position: absolute;
+    position: relative;
     height: 700px !important;
     width: 100% !important;
     background-size: cover !important;
     background-image: url('/source/images/header.jpg') !important;
+    box-shadow: 0px 3px 12px #888888;
 }
 .page-header {
     width: 30% !important;
@@ -61,10 +62,16 @@ if(!(isset($_SESSION['user'])) && !(isset($_SESSION['logged_in']))) { ?>
 	
         <?php include 'includes/navbar.php'; ?>
     
-	<div class="jumbotron">
-	    <div class="ui vertical masthead segment" style="padding: 90px 0 40px 0;">
-            	<div class="ui container page-header">
-			<div class="ui segment login">
+	<div class="jumbotron segment" style="padding: 100px 0 0 0;";>
+	    <div class="ui stackable middle aligned page grid" style="height: 100%;">
+		<div class="ui column sixteen wide" style="background-color: rgba(0,0,0,0.6); position: absolute; padding: 0; left: 0; right: 0; top: 55%; transform: translateY(-50%); height: 120px;">
+		    <div class="ui container" class="display: table;">
+			<h2 style="color: white; display: table-cell; height: 120px; vertical-align: middle;">Welkom op BcTutor, de bijlessite van het Baudartius College!</h2>
+		    </div>
+		</div>
+		<div class="ui column ten wide"></div>
+            	<div class="ui column six wide container page-header">
+			<div class="ui raised top attached segment" style="background-color: #ffffff;">
 			    <div class="ui header">Login</div>
 		   		 <div class="ui divider"></div>
                  		   <form class="ui large form" action="login.php" method="POST">
@@ -77,14 +84,13 @@ if(!(isset($_SESSION['user'])) && !(isset($_SESSION['logged_in']))) { ?>
                             		<label>Wachtwoord</label>
                             		<input type="password" name="mypassword" placeholder="Wachtwoord">
                         	   </div>
-				   <div class="ui error message"></div>
 				   <button class="ui button blue" name="submit-login" type="submit">Inloggen</button>
-				   </form>
-                        	<p>Nog geen BcTutor account?</p>
+                                   </form>
 
-				   <div class="registerform">
-                        		<p>
-						<a class='openRegister'>Account aanmaken</a>
+				   <div class="registerform" style="float: left;">
+					<p style="margin: 10px 0 0 0; float: left;">Nog geen BcTutor account?</p>
+                        		<p style="margin: 0;">
+						<a class='openRegister' href="#" onclick="return false;">Account aanmaken</a>
 					</p>
 					<div class="ui blue modal" id="registerModal" role="dialog">
 					   <div class="header">Registreer</div>
@@ -154,7 +160,6 @@ if(!(isset($_SESSION['user'])) && !(isset($_SESSION['logged_in']))) { ?>
                                                         <input name="Klas" type="text" placeholder="Klas" id="klasinput">
 						    </div>
 						</div>
-  						   <!--<button class="ui button blue" type="submit" name="submit-registration">Registreer</button>-->
 						<div class="ui error message"></div>
 					   </form>
 					   </div>
@@ -171,13 +176,52 @@ if(!(isset($_SESSION['user'])) && !(isset($_SESSION['logged_in']))) { ?>
                      			   </div>
 					</div>
 				   </div>
-				   <div>
-                        		<p>Wachtwoord vergeten?</p>
-                        		<p><a href="">Wachtwoordherstel</a></p>
-				   </div>
-            		      </div>
+				   <div style="clear: both;"></div>
+            		        </div>
+				<div class="ui bottom attached segment">
+         	                    <div>
+                                        <p style="margin: 0;">Wachtwoord vergeten?</p>
+                                       	<p><a href="">Wachtwoordherstel</a></p>
+                                    </div>
+	                        </div>
                 	</div>
 	    	</div>
+	</div>
+	<div class="ui vertical very padded segment" style="padding: 60px 0;">
+		<div class="ui center aligned container">
+			<h1>BcTutor</h1>
+			<div class="ui text container">
+				<p>Zit je op het Baudartius College en heb je moeite met een bepaald vak? Dan biedt BcTutor een uitkomst! Meld je hier aan om bijles te krijgen van een andere leerling van het Baudartius College die erg goed is in het vak waar je moeite mee hebt. Leerlingen begrijpen elkaar tenslotte goed en kunnen daardoor vaak de hulp bieden die je nodig hebt. De kosten van het krijgen van bijles zijn slechts 5 euro per uur en onze school zorgt voor een geschikte ruimte. Natuurlijk kun je je ook aanmelden om zelf Tutor te worden! Check hiervoor wel even de voorwaarden!</p>
+			</div>
+			<br><br><br>
+			<h2>Hoe werkt het?</h2>
+			<br>
+			<div class="ui center aligned relaxed grid">
+				<div class="three column row">
+					<div class="column">
+						<div class="segment">
+							<i class="huge add user icon"></i>
+							<h3>Aanmelden</h3>
+							<p style="font-size: 1.14285714rem;">Meld je aan op BcTutor door op de bovenstaande knop te klikken en vul dan je gegevens in.</p>
+						</div>
+					</div>
+					<div class="column">
+						<div class="segment">
+							<i class="huge checkmark box icon"></i>
+							<h3>Vak(ken) kiezen</h3>
+							<p style="font-size: 1.14285714rem;">Selecteer het vak / de vakken waarin je graag bijles zou willen krijgen.</p>
+						</div>
+					</div>
+					<div class="column">
+						<div class="segment">
+							<i class="huge student icon"></i>
+							<h3>Bijles krijgen</h3>
+							<p style="font-size: 1.14285714rem;">Zodra er een geschikte tutor is gevonden kun je met je tutor een plaats en tijd afspreken.</p>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
 	</div>
 
 <script>
@@ -277,8 +321,8 @@ $('#registerForm')
                           </button>
                       </div>
                 </div>
-
-
+		
+		<?php include 'includes/footer.php'; ?>
     </body>
 </html>
 <?php } else {
@@ -377,5 +421,6 @@ if(isset($_POST['postRegister'])) {
 $('#submit-registration').click(function() {
     $('#registerForm').submit();
 });
+
 </script>
 

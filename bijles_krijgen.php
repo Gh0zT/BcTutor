@@ -55,7 +55,7 @@ if(!($_SESSION['logged_in'] == true)) {
                     <i class="write icon"></i>
                     <div class="content">
                         <div class="title">Bijles krijgen</div>
-                        <div class="description">Zodra er een tutor beschikbaar is die we aan jou kunnen koppelen, kan je direct aan de slag. Je betaaldt wel een bedrag van 5 euro per uur, maar dat zal uiteindelijk moeten gaan lonen.
+                        <div class="description">Zodra er een tutor beschikbaar is die we aan jou kunnen koppelen, kan je direct aan de slag. Je betaalt wel een bedrag van 5 euro per uur, maar dat zal uiteindelijk moeten gaan lonen.
                         </div>
                     </div>
                 </div>
@@ -63,7 +63,7 @@ if(!($_SESSION['logged_in'] == true)) {
         </div>
     </div>
 
-    <div class="ui vertical">
+    <div class="ui vertical segment" style="padding: 0px 0px 60px 0px;">
             <div class="grid2" type="button">
                 <?php
                     $result = mysql_query("SELECT * FROM `Vakken` ORDER BY Vak");
@@ -81,6 +81,7 @@ if(!($_SESSION['logged_in'] == true)) {
                         <?php
                    }
                 ?>
+		<div style="clear:both;"></div>
 
 <script>
                 //wait for page to load
@@ -193,7 +194,8 @@ if(!($_SESSION['logged_in'] == true)) {
                                                     Vereisten om bijles te krijgen
                                                 </div>
                                                 <ul class="list">
-                                                    <li>"Vereisten"</li>
+                                                    <li>Je hebt hulp nodig in een bepaald vak.</li>
+						    <li>Je betaald een bedrag van 5 euro per uur.</li>
                                                 </ul>
                                             </div>
                                             <div class="field">
@@ -265,6 +267,7 @@ $('#aanmeldingBijlesKrijgen')
                 </div>
             </div>
         </div>
+	<?php include 'includes/footer.php'; ?>
     </body>
 <script>
 $('#submit-formding').click(function() {

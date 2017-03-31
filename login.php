@@ -29,7 +29,7 @@ if(isset($_POST['submit-login'])) {
 		header("Location: index.php");
 	}
 	else {
-		echo "Verkeerde gebruikersnaam en/of wachtwoord!";
+		echo "Verkeerde gebruikersnaam en of wachtwoord!";
 	}
 }	
 

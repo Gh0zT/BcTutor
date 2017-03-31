@@ -208,164 +208,144 @@ if((isset($_SESSION['user'])) && (isset($_SESSION['logged_in']))) {
 
 	<?php $page = home; ?>
 
+	<style>
+	    .column > .segment {
+		height: 100%;
+    	    }
+	</style>
+
     </head>
 
     <body>
         <?php include 'includes/navbar.php'; ?>
 	
-	<div class="wrapper" style="padding: 90px 0 40px 0;">
- 	    <h2 style="color: blue;">Dashboard</h2>
-	    <hr>
+	<div class="ui center aligned container" style="margin-top: 90px;">
+ 		<h2 class="header">Dashboard</h2>
+		<br>
+	</div>
 	
 	<?php
 	    $ID = $_SESSION['ID'];
 	    $sql = "SELECT * FROM `Users` WHERE ID='$ID'";
 	    $result = mysql_query($sql);
 	    $row = mysql_fetch_array($result);
-
-	    
-
-	    echo "Welkom op BcTutor " . $row['Voornaam'] . " " . $row['Tussenvoegsel'] . " " . $row['Achternaam'];
 	?>
-	<br/>
-	<?php
-	    echo "Je zit nu in " . $row['Niveau'] . " " . $row['Leerjaar'];
+	<div class="ui equal height grid container">
+		<div class="eight wide column">
+			<div class="ui padded blue segment">
+	<h3 class="ui header">Algemene informatie</h3>
+	<?php    
+
+	    echo "<p>Welkom op BcTutor " . $row['Voornaam'] . " " . $row['Tussenvoegsel'] . " " . $row['Achternaam'] . "</p>";
+	    echo "<p>Je zit nu in " . $row['Niveau'] . " " . $row['Leerjaar'] . ", " . $row['Klas'] . "</p>";
 	?>
-	<br/><br/>
+			</div>
+		</div>
 
 	<?php
-	 	$result2 = mysql_query(" SELECT ID, Vak, Datum FROM Tutoraanmeldingen AS ta WHERE ID = '$ID'
-					 UNION ALL
-					 SELECT ID, Vak, Datum FROM Tutors AS t WHERE ID = '$ID'
-					 UNION ALL
-					 SELECT ID, Vak, Datum FROM Leerlingaanmeldingen AS la WHERE ID = '$ID'
-                                         UNION ALL
-					 SELECT ID, Vak, Datum FROM Leerlingen AS l WHERE ID = '$ID' ");
+	 	$result_ta = mysql_query(" SELECT ta.ID, ta.Vak, ta.Datum, ta.Keuze, Vakken.Vak FROM Tutoraanmeldingen AS ta JOIN Vakken ON ta.Vak = Vakken.ID  WHERE ta.ID = '$ID' ");
+					
+		$result_la = mysql_query(" SELECT la.ID, la.Vak, la.Datum, la.Keuze, Vakken.Vak FROM Leerlingaanmeldingen AS la JOIN Vakken ON la.Vak = Vakken.ID WHERE la.ID = '$ID' ");
 
-	    $num_rows = mysql_num_rows($result2); 
-	    echo $num_rows . "<br>";
-		if($num_rows > 0){
-		    while ($row3 = mysql_fetch_array($result2, MYSQL_ASSOC)){
-			echo $row3['ID'] . "; " . $row3['Vak'] . "; " . $row3['Datum'] . "<br>";	
-		    }
-		}		
-            	if ($num_rows == 0) {
-                    echo "U staat nog nergens voor ingeschreven";
-            	}
-                else {
-                    echo "U staat reeds ingeschreven";
+	        $result_t = mysql_query(" SELECT t.ID, t.Vak, t.Datum, Vakken.Vak FROM Tutors AS t JOIN Vakken ON t.Vak = Vakken.ID WHERE t.ID = '$ID' ");
+                                         
+		$result_l = mysql_query(" SELECT l.ID, l.Vak, l.Datum, Vakken.Vak FROM Leerlingen AS l JOIN Vakken ON l.Vak = Vakken.ID WHERE l.ID = '$ID' ");
+
+		$result_mt = mysql_query(" SELECT mt.Tutor, mt.Leerling, mt.Vak, Vakken.Vak, Users.Voornaam, Users.Tussenvoegsel, Users.Achternaam, Users.Klas FROM Matches AS mt JOIN Vakken ON mt.Vak = Vakken.ID JOIN Users ON mt.Leerling = Users.ID WHERE mt.Tutor = '$ID' ");
+
+		$result_ml = mysql_query(" SELECT ml.Tutor, ml.Leerling, ml.Vak, Vakken.Vak, Users.Voornaam, Users.Tussenvoegsel, Users.Achternaam, Users.Klas FROM Matches AS ml JOIN Vakken ON ml.Vak = Vakken.ID JOIN Users ON ml.Tutor = Users.ID WHERE ml.Leerling = '$ID' ");
+
+
+	        $num_rows_ta = mysql_num_rows($result_ta);
+	        $num_rows_la = mysql_num_rows($result_la);
+	        $num_rows_t = mysql_num_rows($result_t);
+                $num_rows_l = mysql_num_rows($result_l);
+	        $num_rows_mt = mysql_num_rows($result_mt);
+	        $num_rows_ml = mysql_num_rows($result_ml);
+
+	?>
+		<div class="eight wide column">
+			<div class="ui padded blue segment">
+	<h3 class="ui header">Bijles Geven</h3>
+	<?php
+	     if (($num_rows_ta == 0) && ($num_rows_t == 0) && ($num_rows_mt == 0)) {
+                 echo "Je staat nog niet ingeschreven als tutor! <br />";
+		 echo "Schrijf je snel in door naar de kopjes hierboven te navigeren!";
+             }
+             if ($num_rows_ta > 0) {
+                 echo "Je staat reeds geregistreerd als een tutor!<br/ >";
+		 echo "Echter ben je nog in afwachting op een goedkeuring!<br />";
+		 echo "Je staat in de volgende vakken geregistreerd als tutor:<br /><br />";
+		 while ($row_ta = mysql_fetch_array($result_ta, MYSQL_ASSOC)){
+		     echo "<div class='ui blue horizontal label'>" . $row_ta['Vak'] . "</div>";
+		 }
+		 echo "<br /><br />";
+       	     }
+	     if ($num_rows_t > 0) {
+                 echo "Je bent goedgekeurd als een tutor!";
+                 echo "<br />Het is nu afwachten tot dat je gekoppeld wordt!";
+                 echo "<br />Je staat in de volgende vakken geregistreerd als tutor:<br /><br />";
+                 while ($row_t = mysql_fetch_array($result_t, MYSQL_ASSOC)){
+                     echo "<div class='ui blue horizontal label'>" . $row_t['Vak'] . "</div>";
+                 }
+                 echo "<br /><br />";
+             }
+             if ($num_rows_mt > 0) {
+                while ($row_mt = mysql_fetch_array($result_mt, MYSQL_ASSOC)) {
+                    echo "Je geeft al bijles in het vak " . $row_mt['Vak'] . " aan " . $row_mt['Voornaam'] . " " . $row_mt['Tussenvoegsel'] . " " . $row_mt['Achternaam'] . " uit " . $row_mt['Klas'] . "!<br /><br />";
                 }
-	?>
-	<br /><br />
+             }
+	?>		</div>
+		</div>
+	<div class="eight wide column">
+		<div class="ui padded blue segment">
+	<h3 class="ui header">Bijles Krijgen</h3>
 	<?php
-	    echo "In het vak: " . $row2['Vak']; 
-	    echo "<br/ >Op de datum: " . $row2['Datum'];
-	?>
-	<br /><br />
-
-
-
-
-
-
-
-
-
-
-
-<!--	    <div class="dashboard">
-		<div class="bijlesgeven">
-		    <div style="width: 40px; height: 40px; background-color: red;"></div>
-			<h6>Tutor</h6>
-			<p>
-			    <?php 
-			    $ID = $_SESSION['ID'];
-			    $result = mysql_query("SELECT `Tutor` FROM `Users` WHERE `ID`=$ID");
-			    $row = mysql_fetch_array($result);
-                            if ($row['Tutor'] == "nee") {
-				echo "Je bent nog niet aangemeld als Tutor! Klik <a>hier</a> om je aan te melden!";
-			    } else if ($row['Tutor'] == "ja") {
-				$result2 = mysql_query("SELECT u.Voornaam 'Voornaam', u.Tussenvoegsel 'Tussenvoegsel', u.Achternaam 'Achternaam', v.Vak 'Vak' FROM Users u, Tutors t, Vakken v WHERE v.ID = t.Vak AND u.ID = t.Leerling AND t.Tutor = $ID");
-				$i = 1;
-				while ( $row2 = mysql_fetch_array($result2) ) {
-				    if($i == 1) {
-				        echo "Je geeft momenteel bijles aan " . $row2['Voornaam'] . " " . $row2['Tussenvoegsel'] . " " . $row2['Achternaam'] . " in " . $row2['Vak'];
-				    }
-				    if($i != 1) {
-					echo ", en aan " . $row2['Voornaam'] . " " . $row2['Tussenvoegsel'] . " " . $row2['Achternaam'] . " in " . $row2['Vak'];
-				    }
-				    if($i == mysql_num_rows($result2)) {
-					echo ".";	
-				    }
-				    $i++;
-				}	
-			    } else if ($row['Tutor'] == "goedgekeurd") {
-				echo "Je mag bijles geven maar er komt op dit moment niemand in aanmerking om bijles aan te geven. Je ontvangt een e-mail zodra we iemand voor je gevonden hebben!";
-			    } else if ($row['Tutor'] == "wachtend op goedkeuring") {
-				echo "Top dat je je hebt aangemeld om bijles te geven! Je bent in afwachting van goedkeuring om ook echt bijles te mogen gaan geven.";
-			    }
-			    ?>
-			</p>
+             if (($num_rows_la == 0) && ($num_rows_l == 0) && ($num_rows_ml == 0)) {
+                 echo "Je staat nog niet ingeschreven als leerling! <br />";
+                 echo "Schrijf je snel in door naar de kopjes hierboven te navigeren!";
+             }
+             if ($num_rows_la > 0) {
+                 echo "Je staat reeds geregistreerd als een leerling!<br />";
+                 echo "Echter ben je nog in afwachting op een goedkeuring!<br />";
+		 echo "Je staat in de volgende vakken geregistreerd als leerling:<br /><br />";
+                 while ($row_la = mysql_fetch_array($result_la, MYSQL_ASSOC)){
+                     echo "<div class='ui blue horizontal label'>" . $row_la['Vak'] . "</div>";
+		 }
+		 echo "<br /><br />";
+             }
+             if ($num_rows_l > 0) {
+                 echo "Je bent goedgekeurd als een leerling!";
+                 echo "<br />Het is nu afwachten tot dat je gekoppeld wordt!";
+		 echo "<br />Je staat in de volgende vakken geregistreerd als leerling:<br /><br />";
+                 while ($row_l = mysql_fetch_array($result_l, MYSQL_ASSOC)){
+                     echo "<div class='ui blue horizontal label'>" . $row_l['Vak'] . "</div>";
+                 }
+		 echo "<br /><br />";
+             }
+	     if ($num_rows_ml > 0) {
+		while ($row_ml = mysql_fetch_array($result_ml, MYSQL_ASSOC)) {
+                echo "Je krijgt al bijles in het vak " . $row_ml['Vak'] . " van  " . $row_ml['Voornaam'] . " " . $row_ml['Tussenvoegsel'] . " " . $row_ml['Achternaam'] . " uit " . $row_ml['Klas'] . "!<br /><br />";
+                }
+	     }
+	?>		
+			</div>
 		</div>
-		<div class="bijleskrijgen">
-		    <div style="width: 40px; height: 40px; background-color: red;"></div>
-                    <h6>Leerling</h6>
-                    <p>
-			<?php 
-			$ID = $_SESSION['ID'];
-			$result = mysql_query("SELECT u.Leerling 'Leerling' FROM Users u WHERE u.ID=$ID");
-			$row = mysql_fetch_array($result);
-			if ($row['Leerling'] == "nee") {
-			    echo "Je hebt je nog niet aangemeld om bijles te krijgen! Klik <a>hier</a> om je daarvoor aan te melden.";
-			} else if ($row['Leerling'] == "ja") {
-			    $result2 = mysql_query("SELECT u.Voornaam 'Voornaam', u.Tussenvoegsel 'Tussenvoegsel', u.Achternaam 'Achternaam', v.Vak 'Vak' FROM Users u, Tutors t, Vakken v WHERE v.ID = t.Vak AND u.ID = t.Tutor AND t.Leerling = $ID");
-			    $i = 1;
-			    while ( $row2 = mysql_fetch_array($result2) ) {
-				if($i == 1) {
-				    echo "Je krijgt bijles in " . $row2['Vak'] . " van " . $row2['Voornaam'] . " " . $row2['Tussenvoegsel'] . " " . $row2['Achternaam'];
-				}
-                               	if($i != 1) {
-				    echo ", en in " . $row2['Vak'] . " van " . $row2['Voornaam'] . " " . $row2['Tussenvoegsel'] . " " . $row2['Achternaam'];
-				}
-  				if($i == mysql_num_rows($result2)) {
-				    echo ".";
-				}
-				$i++;
-			    }	
-			}
-			?>
-		    </p>	
-		</div>
-	    </div> -->
 
-                <div>
-                Instellingen! <?php echo 'Welkom ' . $_SESSION['user'] . ' !'; ?>
-                </div>
-                <div>
+                <div class="eight wide column">
+			<div class="ui padded blue segment">
+		<h3 class="ui header">Instellingen</h3>
 
-                  <form style="width: 300px;" class="login-form" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                  <input type="text" name="changeusername" placeholder="Verander Gebruikersnaam">
-                  <button type="sumbit" name="submit-settings-username">Aanpassen</button>
-                  </form>
-                  <form style="width: 300px;" class="login-form" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                  <input type="password" name="changepassword" placeholder="Verander Wachtwoord">
-                  <button type="sumbit" name="submit-settings-password">Aanpassen</button>
-                  </form>
-
-                </div>
-	</div>
-<?php
-
-$file = "/var/www/dbconfig.php";
-require($file);
-
-require 'dbconnect.php';
-
+                <form class="ui form login-form" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+			<p>Gebruikersnaam aanpassen</p>
+			<div class="ui small action input">
+				<input type="text" name="changeusername" placeholder="Nieuwe gebruikersnaam">
+                  		<button class="ui mini blue button" type="sumbit" name="submit-settings-username">Aanpassen</button>
+			</div>
+		</form>
+			<?php
 $changeusername = $_POST['changeusername'];
-$changepassword = $_POST['changepassword'];
 $ID = $_SESSION['ID'];
-
-
 if(isset($_POST['submit-settings-username'])) {
 
         if($_SESSION['user'] == true) {
@@ -376,53 +356,65 @@ if(isset($_POST['submit-settings-username'])) {
 
                         if($count==0) {
                                 $result = mysql_query("UPDATE `Users` SET Gebruikersnaam='$changeusername' WHERE ID='$ID'");
-                                echo"Aanpassingen gemaakt!";
+                                echo"<div class='ui small success message'><p>Aanpassingen gemaakt!</p></div>";
                         }
                         else {
-                                echo"Deze gebruikersnaam is al in gebruik!";
+                                echo"<div class='ui small error message'><p>Deze gebruikersnaam is al in gebruik!</p></div>";
                         }
                 }
                 else {
-                        echo"Vul alstublieft een geldige waarde in!";
+                        echo"<div class='ui small error message'><p>Vul alstublieft een geldige waarde in!</p></div>";
                 }
         }
         else {
-                echo"U moet ingelogd zijn om aanpassingen te maken!";
+                echo"<div class='ui small error message'><p>U moet ingelogd zijn om aanpassingen te maken!</p></div>";
         }
 }
+			?>
+                <form class="ui form login-form" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+			<p>Wachtwoord aanpassen</p>
+			<div class="ui small action input">
+                		<input type="password" name="changepassword" placeholder="Nieuw wachtwoord">
+                		<button class="ui mini blue button" type="sumbit" name="submit-settings-password">Aanpassen</button>
+			</div>
+		</form>
+			<?php
+$changepassword = $_POST['changepassword'];
+$ID = $_SESSION['ID'];
 if(isset($_POST['submit-settings-password'])) {
 
         if($_SESSION['user'] == true) {
                 if($changepassword !== '') {
 
-			$usersession = $_SESSION['user'];
+                        $usersession = $_SESSION['user'];
                         $query = mysql_query("SELECT Wachtwoord FROM `Users` WHERE Gebruikersnaam='$usersession'") or die(mysql_error());
                         $count = mysql_num_rows($query);
-			$result2 = mysql_fetch_array($query);
+                        $result2 = mysql_fetch_array($query);
 
-			if($result2['Wachtwoord'] == $changepassword) {
-				echo"Dit wachtwoord is al in gebruik!";
-				break;
-                        }	
+                        if($result2['Wachtwoord'] == $changepassword) {
+                                echo"<div class='ui small error message'><p>Vul een nieuw wachtwoord in!</p></div>";
+                                break;
+                        }
 
                         if($count==1) {
 
                                 $result = mysql_query("UPDATE `Users` SET Wachtwoord='$changepassword' WHERE Gebruikersnaam='$usersession'");
-                                echo"Aanpassingen gemaakt!";
-				echo"$pass";
+                                echo"<div class='ui small success message'><p>Aanpassingen gemaakt!</p></div>";
                         }
                 }
                 else {
-                        echo"Vul alstublieft een geldige waarde in!";
+                        echo"<div class='ui small error message'><p>Vul alstublieft een geldige waarde in!</p></div>";
                 }
         }
         else {
-                echo"U moet ingelogd zijn om aanpassingen te maken!";
+                echo"<div class='ui small error message'><p>U moet ingelogd zijn om aanpassingen te maken!</p></div>";
         }
 }
 
-?>
-
+			?>
+			</div>
+                </div>
+	</div>
     </body>
 </html>
 <?php }

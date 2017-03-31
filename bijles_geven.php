@@ -62,7 +62,7 @@ if(!($_SESSION['logged_in'] == true)) {
 	</div>
     </div>
 
-    <div class="ui vertical">
+    <div class="ui vertical segment" style="padding: 0px 0px 60px 0px;">
             <div class="grid2" type="button">
                 <?php
                     $result = mysql_query("SELECT * FROM `Vakken` ORDER BY Vak");
@@ -80,6 +80,7 @@ if(!($_SESSION['logged_in'] == true)) {
 			<?php
                    }
 		?>
+		<div style="clear: both"></div>
 		
 <script>
 		//wait for page to load 
@@ -266,6 +267,7 @@ $('#aanmeldingBijlesGeven')
 		</div>
             </div>
 	</div>
+	<?php include 'includes/footer.php' ?>
     </body>
 <script>
 $('#submit-formding').click(function() {
